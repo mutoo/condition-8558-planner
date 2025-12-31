@@ -15,7 +15,7 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
   const gaId = measurementId || import.meta.env.VITE_GA_MEASUREMENT_ID
 
   useEffect(() => {
-    // 只在生产环境且配置了 GA ID 时加载
+    // Only load in production and when GA ID is configured
     if (!gaId || import.meta.env.DEV) {
       if (import.meta.env.DEV) {
         console.log('[GA] Development mode - Analytics disabled')
@@ -23,19 +23,19 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
       return
     }
 
-    // 检查是否已经加载
+    // Check if already loaded
     if (typeof window.gtag === 'function') {
       console.log('[GA] Already loaded')
       return
     }
 
-    // 动态加载 GA 脚本
+    // Dynamically load GA script
     const script1 = document.createElement('script')
     script1.async = true
     script1.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`
     document.head.appendChild(script1)
 
-    // 初始化 GA
+    // Initialize GA
     const script2 = document.createElement('script')
     script2.innerHTML = `
       window.dataLayer = window.dataLayer || [];
@@ -50,17 +50,17 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
 
     console.log('[GA] Initialized:', gaId)
 
-    // 清理函数
+    // Cleanup function
     return () => {
-      // 注意：GA 脚本不需要在组件卸载时移除
-      // 因为它是全局的，应该在整个应用生命周期中保持
+      // Note: GA scripts don't need to be removed on component unmount
+      // because they are global and should persist throughout the application lifecycle
     }
   }, [gaId])
 
-  return null // 这是一个无 UI 组件
+  return null // This is a UI-less component
 }
 
-// 工具函数：发送自定义事件
+// Utility function: Send custom event
 export function trackEvent(
   eventName: string,
   eventParams?: Record<string, unknown>
@@ -71,7 +71,7 @@ export function trackEvent(
   }
 }
 
-// 工具函数：发送页面浏览
+// Utility function: Send page view
 export function trackPageView(pagePath: string, pageTitle?: string) {
   if (window.gtag) {
     window.gtag('event', 'page_view', {
@@ -82,7 +82,7 @@ export function trackPageView(pagePath: string, pageTitle?: string) {
   }
 }
 
-// 工具函数：设置用户属性
+// Utility function: Set user properties
 export function setUserProperties(properties: Record<string, unknown>) {
   if (window.gtag) {
     window.gtag('set', 'user_properties', properties)

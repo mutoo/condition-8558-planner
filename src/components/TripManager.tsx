@@ -345,7 +345,7 @@ export function TripManager({
         </div>
       )}
 
-      {/* 次要广告位：已规划行程与添加行程之间 */}
+      {/* Secondary ad slot: Between planned trips and add trip form */}
       <AdSlot 
         slotId={import.meta.env.VITE_ADSENSE_SECONDARY_SLOT || 'secondary-ad'} 
         format="horizontal" 

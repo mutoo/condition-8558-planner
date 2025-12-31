@@ -21,7 +21,7 @@ export function AdSlot({ slotId, format = 'auto', className = '' }: AdSlotProps)
     }
   }, [clientId])
 
-  // 开发环境或未配置 AdSense 时显示占位符
+  // Show placeholder in development or when AdSense is not configured
   if (import.meta.env.DEV || !clientId) {
     return (
       <div className={`ad-slot ad-slot-${format} ${className}`}>
@@ -48,7 +48,7 @@ export function AdSlot({ slotId, format = 'auto', className = '' }: AdSlotProps)
   )
 }
 
-// 扩展 Window 接口以支持 adsbygoogle
+// Extend Window interface to support adsbygoogle
 declare global {
   interface Window {
     adsbygoogle: Array<Record<string, unknown>>

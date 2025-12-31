@@ -7,12 +7,12 @@
   min-height: 90px;
 }
 
-/* 主要广告位样式 */
+/* Primary ad slot style */
 .ad-slot.primary-ad {
   margin: 1.5rem 0 2rem 0;
 }
 
-/* 次要广告位样式 */
+/* Secondary ad slot style */
 .ad-slot.secondary-ad {
   margin: 1.5rem 0;
   padding: 0.5rem 0;
@@ -30,7 +30,7 @@
   min-height: 100px;
 }
 
-/* 开发环境占位符样式 */
+/* Development environment placeholder style */
 .ad-placeholder {
   width: 100%;
   padding: 1.5rem;
@@ -73,7 +73,7 @@
   margin-top: 0.25rem;
 }
 
-/* 移动端优化 */
+/* Mobile optimization */
 @media (max-width: 768px) {
   .ad-slot {
     margin: 1rem 0;

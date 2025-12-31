@@ -90,7 +90,7 @@ function MonthCalendar({
 
   return (
     <div className="calendar-grid">
-      {/* Week day headers */}
+      {/* Weekday headers */}
       {weekdays.map(day => (
         <div key={day} className="calendar-header-cell">
           {day}

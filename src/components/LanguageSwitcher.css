@@ -24,7 +24,7 @@
   overflow: hidden;
 }
 
-/* 添加 hover 背景效果 */
+/* Add hover background effect */
 .language-btn::before {
   content: '';
   position: absolute;

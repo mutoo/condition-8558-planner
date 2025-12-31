@@ -22,7 +22,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* 只针对非 radio-label 的 label */
+/* Only target labels that are not radio-label */
 .visa-setup .form-group > label:not(.radio-label) {
   display: block;
   margin-bottom: 0.5rem;

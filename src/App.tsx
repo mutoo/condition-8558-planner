@@ -90,7 +90,7 @@ function App() {
           </div>
         </section>
 
-        {/* 主要广告位：Info Section 和 Visa Setup 之间 */}
+        {/* Primary ad slot: Between Info Section and Visa Setup */}
         <AdSlot 
           slotId={import.meta.env.VITE_ADSENSE_PRIMARY_SLOT || 'primary-ad'} 
           format="horizontal" 
