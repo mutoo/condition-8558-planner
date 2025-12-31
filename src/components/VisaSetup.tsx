@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Play, Trash2 } from 'lucide-react'
 import { formatDate, getToday } from '../utils/dateUtils'
+import { trackEvent } from './GoogleAnalytics'
 import './VisaSetup.css'
 
 interface VisaSetupProps {
@@ -46,6 +47,13 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
     } else {
       onStart(start, duration)
     }
+
+    // Track visa setup completion
+    trackEvent('visa_setup_completed', {
+      duration: duration,
+      start_date: visaStart,
+      has_custom_end: duration === 'custom',
+    })
   }
 
   const handleClearData = () => {
@@ -54,6 +62,11 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
       setVisaStart('')
       setCustomEnd('')
       setDuration('18')
+      
+      // Track data clearing
+      trackEvent('data_cleared', {
+        had_data: hasData,
+      })
     }
   }
 

@@ -11,6 +11,7 @@ import {
 } from '../utils/dateUtils'
 import { validateTrip, calculateMaxConsecutiveStay } from '../utils/validator'
 import { AdSlot } from './AdSlot'
+import { trackEvent } from './GoogleAnalytics'
 import './TripManager.css'
 
 interface TripManagerProps {
@@ -80,6 +81,16 @@ export function TripManager({
     onAddTrip(newEntryDate, newExitDate)
     setNewEntryDate('')
     setNewExitDate('')
+    
+    // Track trip added
+    const entry = parseDate(newEntryDate)
+    const exit = parseDate(newExitDate)
+    const days = daysBetween(entry, exit) + 1
+    trackEvent('trip_added', {
+      days: days,
+      entry_date: newEntryDate,
+      exit_date: newExitDate,
+    })
   }
 
   const handleStartEdit = (trip: Trip) => {
@@ -112,6 +123,15 @@ export function TripManager({
     setEditingId(null)
     setEditEntry('')
     setEditExit('')
+    
+    // Track trip updated
+    const entry = parseDate(editEntry)
+    const exit = parseDate(editExit)
+    const days = daysBetween(entry, exit) + 1
+    trackEvent('trip_updated', {
+      trip_id: id,
+      days: days,
+    })
   }
 
   const handleCancelEdit = () => {
@@ -126,6 +146,11 @@ export function TripManager({
       if (editingId === id) {
         handleCancelEdit()
       }
+      
+      // Track trip deleted
+      trackEvent('trip_deleted', {
+        trip_id: id,
+      })
     }
   }
 
@@ -166,6 +191,13 @@ export function TripManager({
     }
     
     alert(t('trip.alerts.maxStaySet', { days: maxDays, date: exitDateStr }))
+    
+    // Track max stay calculation
+    trackEvent('max_stay_calculated', {
+      entry_date: currentEntry,
+      max_days: maxDays,
+      exit_date: exitDateStr,
+    })
   }
 
   return (

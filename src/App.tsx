@@ -7,6 +7,7 @@ import { StatsPanel } from './components/StatsPanel'
 import { Calendar, type CalendarRef } from './components/Calendar'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { AdSlot } from './components/AdSlot'
+import { GoogleAnalytics } from './components/GoogleAnalytics'
 import { calculateStatistics } from './utils/tripUtils'
 import { formatDate, parseDate } from './utils/dateUtils'
 import './styles/App.css'
@@ -60,6 +61,7 @@ function App() {
 
   return (
     <div className="app">
+      <GoogleAnalytics />
       <LanguageSwitcher />
       <header className="app-header">
         <h1>{t('app.title')}</h1>
