@@ -1,90 +1,180 @@
-# Condition 8558 Calculator
+# Condition 8558 Planner
 
-A modern Australian visa Condition 8558 trip planning tool built with React + TypeScript + Vite.
+A modern, professional Australian visa Condition 8558 trip planning tool built with React + TypeScript + Vite.
 
-## Features
+🔗 **Live Demo**: [condition-8558-planner](https://github.com/mutoo/condition-8558-planner)
 
-### 1. Multi-language Support
-- Default language: English
-- Supported languages: English (en) and Chinese (zh)
+## ✨ Features
+
+### 🌐 Multi-language Support
+- **Default language**: English
+- **Supported languages**: English (en) and Chinese (zh)
 - Easy language switching via top-right button
 - Language preference saved to localStorage
+- Localized date formats and validation messages
 
-### 2. Visa Setup
-- Input visa start date
+### 📅 Visa Setup
+- Input visa start date with validation
 - Select visa validity period: 18 months, 3 years, 5 years, 10 years, or custom
 - Automatically calculate visa end date
+- Duration selection with radio buttons
+- Clear all data functionality with confirmation
 
-### 2. Visa Setup
+### ✈️ Trip Management
 - Add, edit, and delete entry/exit trips
-- Automatic trip validation
-- Detect trip overlaps
-- Real-time Condition 8558 compliance checking
+- Automatic trip validation against Condition 8558
+- Detect trip overlaps and date conflicts
+- Real-time compliance checking
+- Calculate maximum consecutive stay
+- Click trip dates to navigate to calendar view
+- Visual status indicators (valid/invalid trips)
 
-### 3. Trip Management
+### 📊 Statistics Dashboard
 - Display visa validity period
 - Count of planned trips
-- Total days in Australia
-- Violation days statistics
+- Total days spent in Australia
+- Violation days statistics with warnings
 - Earliest entry and latest exit dates
+- Real-time updates as trips change
 
-### 4. Statistics
+### 📆 Interactive Calendar
+- Visual representation of all planned trips
+- 18-month sliding window visualization
+- Color-coded days:
+  - 🟢 In Australia
+  - ⚪ Out of Australia
+  - 🔴 Window full (cannot enter)
+  - ⚠️ Violation days
+  - ⚫ Outside visa period
+- Click any date to see detailed window usage
+- Sticky trip manager for easy access
+- Responsive design for mobile devices
+
+### 💾 Data Persistence
 - Auto-save to localStorage
 - Data persists after page refresh
-- One-click clear all data
+- One-click clear all data with confirmation
+- Safe data management
 
-### 5. Data Persistence
+### 📢 Google AdSense Integration
+- Two strategically placed ad slots
+- Environment variable configuration
+- Development mode with placeholders
+- Responsive ad sizes for all devices
+
+### 📈 Google Analytics
+- Comprehensive event tracking
+- User behavior analytics
+- Custom event tracking for key actions
+- Privacy-friendly (disabled in development)
+- GDPR considerations documented
+
+### 🎨 Modern UI/UX
+- Professional blue theme
+- Clean, flat design
+- Responsive layout optimized for mobile
+- Custom scrollbars
+- Smooth animations and transitions
+- lucide-react icons throughout
+- Optimized spacing and typography
+
+## 📖 What is Condition 8558?
 
 Condition 8558 is a common restriction on Australian visas:
 - Within any continuous **18-month** (548 days) period
 - The holder must not stay in Australia for more than **12 months** (365 days)
 - This is a **sliding window** calculation, measured in days
+- Both entry and exit days count toward time in Australia
 
-## Tech Stack
+⚠️ **Important**: The Australian Department of Home Affairs does not provide strict mathematical definitions for "18 months" and "12 months", allowing immigration judges greater discretion. This application uses 365 days for 12 months and 548 days for 18 months for calculation purposes.
+
+## 🛠️ Tech Stack
 
 - **Frontend Framework**: React 18
 - **Language**: TypeScript 5.6
 - **Build Tool**: Vite 6
 - **Package Manager**: pnpm
 - **Internationalization**: i18next + react-i18next
+- **Icons**: lucide-react
 - **Code Quality**: ESLint + Prettier
 - **Testing**: Vitest + Testing Library
+- **Analytics**: Google Analytics 4
+- **Monetization**: Google AdSense
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
-├── components/         # React components
+├── components/              # React components
 │   ├── Calendar/           # Calendar-related components
-│   │   ├── Calendar.tsx
-│   │   ├── MonthBlock.tsx
-│   │   └── DateModal.tsx
+│   │   ├── Calendar.tsx    # Main calendar component
+│   │   ├── MonthBlock.tsx  # Individual month display
+│   │   ├── DateModal.tsx   # Date details modal
+│   │   └── index.ts        # Calendar exports
+│   ├── AdSlot.tsx          # Google AdSense ad component
+│   ├── GoogleAnalytics.tsx # Google Analytics integration
 │   ├── LanguageSwitcher.tsx # Language switcher component
 │   ├── VisaSetup.tsx       # Visa setup component
 │   ├── TripManager.tsx     # Trip management component
 │   └── StatsPanel.tsx      # Statistics panel component
-├── hooks/             # Custom hooks
+├── hooks/                  # Custom hooks
 │   └── useAppState.ts      # Application state management
-├── i18n/              # Internationalization
+├── i18n/                   # Internationalization
 │   ├── config.ts           # i18n configuration
 │   └── locales/            # Translation files
 │       ├── en.json         # English translations
 │       └── zh.json         # Chinese translations
-├── utils/             # Utility functions
+├── utils/                  # Utility functions
 │   ├── dateUtils.ts        # Date manipulation utilities
 │   ├── validator.ts        # Condition 8558 validation logic
+│   ├── calculator.ts       # Sliding window calculations
 │   ├── tripUtils.ts        # Trip-related utilities
 │   └── storage.ts          # Local storage management
-├── types/             # TypeScript type definitions
+├── types/                  # TypeScript type definitions
 │   └── index.ts
-├── styles/            # Global styles
-│   ├── index.css
-│   └── App.css
-├── App.tsx            # Main application component
-└── main.tsx           # Application entry point
+├── styles/                 # Global styles
+│   ├── index.css           # Global CSS with theme
+│   └── App.css             # Main app styles
+├── App.tsx                 # Main application component
+└── main.tsx                # Application entry point
 ```
 
-## Development
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ 
+- pnpm (recommended) or npm
+
+### Installation
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/mutoo/condition-8558-planner.git
+cd condition-8558-planner
+```
+
+2. **Install dependencies**
+```bash
+pnpm install
+```
+
+3. **Configure environment variables (Optional)**
+
+For Google AdSense and Analytics:
+```bash
+cp .env.sample .env
+# Edit .env and add your IDs
+```
+
+4. **Start development server**
+```bash
+pnpm dev
+```
+
+Visit `http://localhost:5173` to see the app running.
+
+## 🔧 Development
 
 ### Install Dependencies
 
@@ -144,7 +234,23 @@ pnpm test:ui
 pnpm test:coverage
 ```
 
-## Core Algorithm
+## 🔐 Environment Variables
+
+Create a `.env` file based on `.env.sample`:
+
+```bash
+# Google AdSense Configuration
+VITE_ADSENSE_CLIENT_ID=ca-pub-XXXXXXXXXXXXXXXX
+VITE_ADSENSE_PRIMARY_SLOT=1234567890
+VITE_ADSENSE_SECONDARY_SLOT=0987654321
+
+# Google Analytics Configuration
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+See [ADSENSE_SETUP.md](./ADSENSE_SETUP.md) and [GOOGLE_ANALYTICS.md](./GOOGLE_ANALYTICS.md) for detailed setup instructions.
+
+## 🧮 Core Algorithm
 
 ### Sliding Window Calculation
 
@@ -177,34 +283,113 @@ function getDaysInAustraliaForWindow(date: Date, trips: Trip[]): number {
 
 ### Trip Validation
 
-1. Check if date range is valid (exit date must be after or equal to entry date)
-2. Check if within visa validity period
-3. Check for overlaps with existing trips
-4. Check if any day during the trip violates Condition 8558
+The validator checks each trip against the following rules:
 
-## Proof of Concept
+1. **Date Range Validity**: Exit date must be on or after entry date
+2. **Visa Period Check**: Trip must be within visa validity period
+3. **Overlap Detection**: No overlapping with existing trips
+4. **Condition 8558 Compliance**: No day during the trip violates the 12/18 month rule
 
-The original PoC code is preserved in the `poc/` directory, including:
-- Original HTML/CSS/JavaScript implementation
-- Complete calendar visualization
-- Test cases
+### Maximum Stay Calculation
 
-## Future Plans
+The app can calculate the maximum consecutive days you can stay starting from any entry date:
 
-- [x] Add unit tests ✅ **Completed**
-- [ ] Support exporting trip plans (PDF/Excel)
-- [ ] Add multi-language support (English, Chinese)
-- [ ] Add end-to-end tests
-- [ ] Optimize mobile experience
+```typescript
+function calculateMaxConsecutiveStay(
+  entryDate: Date,
+  existingTrips: Trip[],
+  visaEnd: Date
+): number {
+  // Binary search for the maximum valid exit date
+  // considering the 18-month sliding window
+}
+```
 
-## Contributing
+## 📚 Documentation
 
-Issues and Pull Requests are welcome!
+- **[I18N.md](./I18N.md)** - Multi-language implementation guide
+- **[ADSENSE_SETUP.md](./ADSENSE_SETUP.md)** - Google AdSense integration guide (Chinese)
+- **[GOOGLE_ANALYTICS.md](./GOOGLE_ANALYTICS.md)** - Google Analytics setup guide
+- **[QUICKSTART.md](./QUICKSTART.md)** - Quick start guide (Chinese)
+- **[DEVELOPMENT.md](./DEVELOPMENT.md)** - Development guide (Chinese)
+- **[TESTING.md](./TESTING.md)** - Testing guide (Chinese)
 
-## License
+## 🎯 Roadmap
 
-MIT
+### Completed ✅
+- [x] Multi-language support (English, Chinese)
+- [x] Unit tests with Vitest
+- [x] Google AdSense integration
+- [x] Google Analytics tracking
+- [x] Mobile responsive design
+- [x] Interactive calendar visualization
+- [x] Trip validation and max stay calculation
+- [x] Data persistence with localStorage
+- [x] Professional UI/UX with blue theme
 
-## Disclaimer
+### Planned 📋
+- [ ] Export trip plans (PDF/Excel/iCal)
+- [ ] End-to-end tests with Playwright
+- [ ] PWA support (offline functionality)
+- [ ] Share trip plans via URL
+- [ ] Support for other visa conditions
+- [ ] Dark mode
+- [ ] Email notifications for upcoming trips
 
-This tool is for reference only. Please refer to official Australian immigration documents for specific visa conditions.
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+### How to Contribute
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Guidelines
+
+- Follow the existing code style
+- Write meaningful commit messages
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting PR
+
+## 📄 License
+
+MIT License - see the [LICENSE](LICENSE) file for details
+
+## ⚠️ Disclaimer
+
+**This tool is for reference and planning purposes only.**
+
+- The Australian Department of Home Affairs does not provide strict mathematical definitions for "18 months" and "12 months"
+- This application uses 365 days for 12 months and 548 days for 18 months
+- Both entry and exit days are counted as time in Australia
+- Immigration judges have discretionary power in interpreting visa conditions
+- Always consult official Australian immigration documents and professional migration agents for definitive advice
+- The developers are not responsible for any decisions made based on this tool
+
+For official information, visit:
+- [Department of Home Affairs](https://immi.homeaffairs.gov.au/)
+- [Visa Conditions](https://immi.homeaffairs.gov.au/visas/already-have-a-visa/check-visa-details-and-conditions)
+
+## 🙏 Acknowledgments
+
+- React and Vite teams for excellent development tools
+- i18next for internationalization support
+- lucide-react for beautiful icons
+- The open-source community
+
+## 📞 Support
+
+If you find this tool helpful, please ⭐ star the repository!
+
+For issues and questions:
+- Open an issue on [GitHub Issues](https://github.com/mutoo/condition-8558-planner/issues)
+- Check existing documentation in the `docs/` folder
+
+---
+
+Made with ❤️ for the Australian visa community
