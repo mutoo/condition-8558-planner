@@ -47,7 +47,7 @@ describe('Date Utils', () => {
   })
 
   describe('formatDisplayDate', () => {
-    it('should format date for display in Chinese', () => {
+    it('should format date for display', () => {
       const date = new Date(2024, 6, 4)
       const formatted = formatDisplayDate(date)
       expect(formatted).toBe('2024年7月4日')
@@ -199,7 +199,7 @@ describe('Date Utils', () => {
   })
 
   describe('getDayOfWeekName', () => {
-    it('should return correct day names in Chinese', () => {
+    it('should return correct day names', () => {
       const sunday = new Date(2024, 6, 7) // Sunday
       expect(getDayOfWeekName(sunday)).toBe('日')
 

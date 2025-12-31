@@ -115,14 +115,14 @@ describe('Validator', () => {
       const trip: Trip = { id: '1', entry: '2024-01-10', exit: '2024-01-05' }
       const result = validateTrip(trip, [], visaStart, visaEnd)
       expect(result.valid).toBe(false)
-      expect(result.reason).toContain('出境日期必须晚于或等于入境日期')
+      expect(result.reason).toContain('Exit date must be after or equal to entry date')
     })
 
     it('should reject if outside visa validity', () => {
       const trip: Trip = { id: '1', entry: '2023-01-01', exit: '2023-12-31' }
       const result = validateTrip(trip, [], visaStart, visaEnd)
       expect(result.valid).toBe(false)
-      expect(result.reason).toContain('行程不在签证有效期内')
+      expect(result.reason).toContain('Trip is outside visa validity period')
     })
 
     it('should reject if overlaps with existing trip', () => {
@@ -132,7 +132,7 @@ describe('Validator', () => {
       const trip: Trip = { id: '1', entry: '2024-01-18', exit: '2024-01-25' }
       const result = validateTrip(trip, existingTrips, visaStart, visaEnd)
       expect(result.valid).toBe(false)
-      expect(result.reason).toContain('行程与现有行程重叠')
+      expect(result.reason).toContain('Trip overlaps with existing trip')
     })
 
     it('should reject if violates Condition 8558', () => {
@@ -143,7 +143,7 @@ describe('Validator', () => {
       const trip: Trip = { id: '1', entry: '2024-12-31', exit: '2024-12-31' }
       const result = validateTrip(trip, existingTrips, visaStart, visaEnd)
       expect(result.valid).toBe(false)
-      expect(result.reason).toContain('违反 Condition 8558')
+      expect(result.reason).toContain('Violates Condition 8558')
     })
 
     it('should accept valid trip', () => {
