@@ -145,6 +145,16 @@ function App() {
 
       <footer className="app-footer">
         <p>{t('app.footer')}</p>
+        <div className="footer-links">
+          <a 
+            href="https://buymeacoffee.com/mutoo" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="support-link"
+          >
+            {t('app.support')}
+          </a>
+        </div>
         <p className="copyright">{t('app.copyright', { year: new Date().getFullYear() })}</p>
       </footer>
     </div>
