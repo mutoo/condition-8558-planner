@@ -257,6 +257,42 @@ VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
 See [ADSENSE_SETUP.md](./ADSENSE_SETUP.md) and [GOOGLE_ANALYTICS.md](./GOOGLE_ANALYTICS.md) for detailed setup instructions.
 
+## 🚀 Deployment
+
+### Deploy to GitHub Pages
+
+This project includes a GitHub Actions workflow for automatic deployment to GitHub Pages.
+
+#### Setup GitHub Pages
+
+1. Go to your repository **Settings** → **Pages**
+2. Under **Source**, select **GitHub Actions**
+3. (Optional) Add environment secrets in **Settings** → **Secrets and variables** → **Actions**:
+   - `VITE_ADSENSE_CLIENT_ID`
+   - `VITE_ADSENSE_PRIMARY_SLOT`
+   - `VITE_ADSENSE_SECONDARY_SLOT`
+   - `VITE_GA_MEASUREMENT_ID`
+
+#### Manual Deployment
+
+1. Go to **Actions** tab in your GitHub repository
+2. Select **Deploy to GitHub Pages** workflow
+3. Click **Run workflow**
+4. Select the branch and click **Run workflow**
+
+The site will be deployed to `https://<username>.github.io/<repository>/`
+
+#### Automatic Deployment (Optional)
+
+To enable automatic deployment on push to main branch, uncomment these lines in `.github/workflows/deploy.yml`:
+
+```yaml
+push:
+  branches:
+    - main
+```
+
+
 ## 🧮 Core Algorithm
 
 ### Sliding Window Calculation
@@ -314,12 +350,12 @@ function calculateMaxConsecutiveStay(
 
 ## 📚 Documentation
 
-- **[I18N.md](./I18N.md)** - Multi-language implementation guide
-- **[ADSENSE_SETUP.md](./ADSENSE_SETUP.md)** - Google AdSense integration guide (Chinese)
-- **[GOOGLE_ANALYTICS.md](./GOOGLE_ANALYTICS.md)** - Google Analytics setup guide
-- **[QUICKSTART.md](./QUICKSTART.md)** - Quick start guide (Chinese)
-- **[DEVELOPMENT.md](./DEVELOPMENT.md)** - Development guide (Chinese)
-- **[TESTING.md](./TESTING.md)** - Testing guide (Chinese)
+- **[DEPLOYMENT.md](./docs/DEPLOYMENT.md)** - Deployment guide for GitHub Pages
+- **[I18N.md](./docs/I18N.md)** - Multi-language implementation guide
+- **[ADSENSE_SETUP.md](./docs/ADSENSE_SETUP.md)** - Google AdSense integration guide
+- **[GOOGLE_ANALYTICS.md](./docs/GOOGLE_ANALYTICS.md)** - Google Analytics setup guide
+- **[DEVELOPMENT.md](./docs/DEVELOPMENT.md)** - Development guide
+- **[TESTING.md](./TESTING.md)** - Testing guide
 
 ## 🎯 Roadmap
 
