@@ -2,7 +2,7 @@
 
 A modern, professional Australian visa Condition 8558 trip planning tool built with React + TypeScript + Vite.
 
-🔗 **Live Demo**: [condition-8558-planner](https://github.com/mutoo/condition-8558-planner)
+🔗 **Live Demo**: [condition-8558-planner](https://condition-8558.mutoo.im)
 
 ## ✨ Features
 
