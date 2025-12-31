@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { Trip } from '../../types'
 import {
   formatDisplayDate,
@@ -29,6 +30,8 @@ export function DateModal({
   onSetAsEntry,
   onSetAsExit,
 }: DateModalProps) {
+  const { t, i18n } = useTranslation()
+  
   // Close on ESC key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -79,43 +82,43 @@ export function DateModal({
     <div className="modal" onClick={handleBackdropClick}>
       <div className="modal-content">
         <div className="modal-header">
-          <h3>{formatDisplayDate(date)}</h3>
+          <h3>{formatDisplayDate(date, i18n.language)}</h3>
           <span className="modal-close" onClick={onClose}>
             &times;
           </span>
         </div>
 
         <div className="modal-body">
-          <h4>📊 18个月滑动窗口使用情况</h4>
+          <h4>{t('dateModal.windowUsage')}</h4>
           <div className="info-row">
-            <span className="info-label">窗口期间</span>
+            <span className="info-label">{t('dateModal.windowPeriod')}</span>
             <span className="info-value">
-              {formatDisplayDate(windowUsage.windowStart)} -{' '}
-              {formatDisplayDate(date)}
+              {formatDisplayDate(windowUsage.windowStart, i18n.language)} -{' '}
+              {formatDisplayDate(date, i18n.language)}
             </span>
           </div>
           <div className="info-row">
-            <span className="info-label">已使用</span>
+            <span className="info-label">{t('dateModal.used')}</span>
             <span className="info-value">
-              {windowUsage.daysUsed} 天 ({percentage}%)
+              {windowUsage.daysUsed} {t('common.days')} ({percentage}%)
             </span>
           </div>
           <div className="info-row">
-            <span className="info-label">剩余</span>
-            <span className="info-value">{windowUsage.daysRemaining} 天</span>
+            <span className="info-label">{t('dateModal.remaining')}</span>
+            <span className="info-value">{windowUsage.daysRemaining} {t('common.days')}</span>
           </div>
 
           {windowUsage.trips.length > 0 && (
             <>
-              <h4>影响此窗口的行程</h4>
+              <h4>{t('dateModal.affectingTrips')}</h4>
               <ul>
                 {windowUsage.trips.map((trip, index) => {
                   const entry = parseDate(trip.entry)
                   const exit = parseDate(trip.exit)
                   return (
                     <li key={index}>
-                      {formatDisplayDate(entry)} - {formatDisplayDate(exit)} (
-                      {trip.days}天)
+                      {formatDisplayDate(entry, i18n.language)} - {formatDisplayDate(exit, i18n.language)} (
+                      {trip.days}{t('trip.daysUnit')})
                     </li>
                   )
                 })}
@@ -125,26 +128,26 @@ export function DateModal({
 
           {currentTrip && (
             <div className="highlight">
-              <strong>📍 此日期在现有行程内</strong>
+              <strong>{t('dateModal.inExistingTrip')}</strong>
               <br />
-              {formatDisplayDate(parseDate(currentTrip.entry))} -{' '}
-              {formatDisplayDate(parseDate(currentTrip.exit))}
+              {formatDisplayDate(parseDate(currentTrip.entry), i18n.language)} -{' '}
+              {formatDisplayDate(parseDate(currentTrip.exit), i18n.language)}
             </div>
           )}
 
           {maxConsecutiveDays <= 0 ? (
             <>
               <div className="danger">
-                <strong>⚠️ 窗口已满，无法在此日期入境！</strong>
+                <strong>{t('dateModal.windowFullWarning')}</strong>
               </div>
               {nextValidDate && (
                 <div className="success">
-                  <strong>✅ 下一个可入境日期</strong>
+                  <strong>{t('dateModal.nextValidDate')}</strong>
                   <br />
-                  {formatDisplayDate(nextValidDate)}
+                  {formatDisplayDate(nextValidDate, i18n.language)}
                   <br />
                   <small>
-                    （需等待 {daysBetween(date, nextValidDate)} 天）
+                    {t('dateModal.waitDays', { days: daysBetween(date, nextValidDate) })}
                   </small>
                 </div>
               )}
@@ -153,19 +156,19 @@ export function DateModal({
             <div className={maxConsecutiveDays < 30 ? 'warning' : 'success'}>
               {currentTrip ? (
                 <>
-                  💡 如果从此日期重新规划，最多可连续停留：
-                  <strong>{maxConsecutiveDays} 天</strong>
+                  {t('dateModal.replanMaxStay')}
+                  <strong>{maxConsecutiveDays} {t('common.days')}</strong>
                 </>
               ) : (
                 <>
-                  ✅ 从此日期开始，最多可连续停留：
-                  <strong>{maxConsecutiveDays} 天</strong>
+                  {t('dateModal.maxStayFromDate')}
+                  <strong>{maxConsecutiveDays} {t('common.days')}</strong>
                 </>
               )}
               {maxConsecutiveDays < 30 && (
                 <>
                   <br />
-                  <small>⚠️ 警告：可停留天数较少！</small>
+                  <small>{t('dateModal.lowStayWarning')}</small>
                 </>
               )}
             </div>
@@ -178,17 +181,17 @@ export function DateModal({
               className="action-btn entry-btn"
               onClick={() => onSetAsEntry(date)}
             >
-              设置为入境日期
+              {t('dateModal.setAsEntry')}
             </button>
             <button
               className="action-btn exit-btn"
               onClick={() => onSetAsExit(date)}
             >
-              设置为出境日期
+              {t('dateModal.setAsExit')}
             </button>
           </div>
           <button className="primary-btn" onClick={onClose}>
-            关闭
+            {t('dateModal.close')}
           </button>
         </div>
       </div>

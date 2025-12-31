@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { Trip } from '../types'
 import {
   formatDate,
@@ -31,6 +32,7 @@ export function TripManager({
   initialEntryDate,
   initialExitDate,
 }: TripManagerProps) {
+  const { t, i18n } = useTranslation()
   const [entryDate, setEntryDate] = useState('')
   const [exitDate, setExitDate] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -52,7 +54,7 @@ export function TripManager({
     e.preventDefault()
 
     if (!entryDate || !exitDate) {
-      alert('请输入入境和出境日期')
+      alert(t('trip.alerts.enterDates'))
       return
     }
 
@@ -97,7 +99,7 @@ export function TripManager({
   }
 
   const handleDelete = (id: string) => {
-    if (confirm('确定要删除这个行程吗？')) {
+    if (confirm(t('trip.alerts.confirmDelete'))) {
       onDeleteTrip(id)
       if (editingId === id) {
         handleCancelEdit()
@@ -107,7 +109,7 @@ export function TripManager({
 
   const handleSetMaxExit = () => {
     if (!entryDate) {
-      alert('请先选择入境日期')
+      alert(t('trip.alerts.selectEntry'))
       return
     }
 
@@ -115,7 +117,7 @@ export function TripManager({
 
     // Check if entry date is within visa validity
     if (entry < visaStart || entry > visaEnd) {
-      alert('入境日期不在签证有效期内')
+      alert(t('trip.alerts.entryOutOfVisa'))
       return
     }
 
@@ -130,7 +132,7 @@ export function TripManager({
     const maxDays = calculateMaxConsecutiveStay(entry, relevantTrips, visaEnd)
 
     if (maxDays <= 0) {
-      alert('该日期无法入境，窗口已满或有行程冲突')
+      alert(t('trip.alerts.cannotEntry'))
       return
     }
 
@@ -139,17 +141,17 @@ export function TripManager({
     const exitDateStr = formatDate(maxExitDate)
 
     setExitDate(exitDateStr)
-    alert(`已设置为最大停留期：${maxDays} 天\n出境日期：${exitDateStr}`)
+    alert(t('trip.alerts.maxStaySet', { days: maxDays, date: exitDateStr }))
   }
 
   return (
     <section className="trip-manager">
-      <h2>{editingId ? '编辑行程' : '添加行程'}</h2>
+      <h2>{editingId ? t('trip.editTitle') : t('trip.title')}</h2>
 
       <form onSubmit={handleSubmit} className="trip-form">
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="entry-date">入境日期：</label>
+            <label htmlFor="entry-date">{t('trip.entryDate')}</label>
             <input
               type="date"
               id="entry-date"
@@ -162,7 +164,7 @@ export function TripManager({
           </div>
 
           <div className="form-group">
-            <label htmlFor="exit-date">出境日期：</label>
+            <label htmlFor="exit-date">{t('trip.exitDate')}</label>
             <div className="date-input-with-button">
               <input
                 type="date"
@@ -177,16 +179,16 @@ export function TripManager({
                 type="button"
                 className="max-btn"
                 onClick={handleSetMaxExit}
-                title="设置为最大可停留日期"
+                title={t('trip.maxStay')}
               >
-                最大
+                {t('trip.maxStay')}
               </button>
             </div>
           </div>
 
           <div className="form-buttons">
             <button type="submit" className="secondary-btn">
-              {editingId ? '更新' : '添加'}
+              {editingId ? t('trip.update') : t('trip.add')}
             </button>
             {editingId && (
               <button
@@ -194,7 +196,7 @@ export function TripManager({
                 className="cancel-btn"
                 onClick={handleCancelEdit}
               >
-                取消
+                {t('trip.cancel')}
               </button>
             )}
           </div>
@@ -203,7 +205,7 @@ export function TripManager({
 
       {trips.length > 0 ? (
         <div className="trips-list">
-          <h3>已规划行程</h3>
+          <h3>{t('trip.planned')}</h3>
           <div className="trip-items">
             {trips.map(trip => {
               const entry = parseDate(trip.entry)
@@ -226,29 +228,29 @@ export function TripManager({
                 >
                   <div className="trip-info">
                     <div className="trip-dates">
-                      <span className="trip-label">入境：</span>
+                      <span className="trip-label">{t('trip.entry')}</span>
                       <span className="trip-date">
-                        {formatDisplayDate(entry)}
+                        {formatDisplayDate(entry, i18n.language)}
                       </span>
                     </div>
                     <div className="trip-dates">
-                      <span className="trip-label">出境：</span>
+                      <span className="trip-label">{t('trip.exit')}</span>
                       <span className="trip-date">
-                        {formatDisplayDate(exit)}
+                        {formatDisplayDate(exit, i18n.language)}
                       </span>
                     </div>
                     <div className="trip-duration">
-                      <span className="trip-label">天数：</span>
-                      <span className="trip-days">{days} 天</span>
+                      <span className="trip-label">{t('trip.days')}</span>
+                      <span className="trip-days">{days}{t('trip.daysUnit')}</span>
                     </div>
                     <div className="trip-status">
                       {validation.valid ? (
                         <span className="status-valid">
-                          ✓ {validation.reason}
+                          {t('trip.status.valid')} {validation.reason}
                         </span>
                       ) : (
                         <span className="status-invalid">
-                          ✗ {validation.reason}
+                          {t('trip.status.invalid')} {validation.reason}
                         </span>
                       )}
                     </div>
@@ -258,13 +260,13 @@ export function TripManager({
                       className="edit-btn"
                       onClick={() => handleEdit(trip)}
                     >
-                      编辑
+                      {t('trip.edit')}
                     </button>
                     <button
                       className="delete-btn"
                       onClick={() => handleDelete(trip.id)}
                     >
-                      删除
+                      {t('trip.delete')}
                     </button>
                   </div>
                 </div>
@@ -274,7 +276,7 @@ export function TripManager({
         </div>
       ) : (
         <div className="empty-trips">
-          <p>暂无行程</p>
+          <p>{t('trip.empty')}</p>
         </div>
       )}
     </section>

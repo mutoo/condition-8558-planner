@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { Trip, MonthStatus } from '../../types'
 import { getMonthStart, getMonthEnd } from '../../utils/dateUtils'
 import { getDayStatus } from '../../utils/validator'
@@ -23,8 +24,9 @@ export function MonthBlock({
   onToggle,
   onDateClick,
 }: MonthBlockProps) {
+  const { t, i18n } = useTranslation()
   const monthStatus = getMonthStatus(year, month, visaStart, visaEnd, trips)
-  const monthName = getMonthName(year, month)
+  const monthName = getMonthName(year, month, t, i18n.language)
 
   return (
     <div className={`month-block ${isExpanded ? 'expanded' : ''}`}>
@@ -66,12 +68,21 @@ function MonthCalendar({
   trips,
   onDateClick,
 }: MonthCalendarProps) {
+  const { t } = useTranslation()
   const firstDay = getMonthStart(new Date(year, month, 1))
   const lastDay = getMonthEnd(new Date(year, month, 1))
   const startWeekday = firstDay.getDay()
   const daysInMonth = lastDay.getDate()
 
-  const weekdays = ['日', '一', '二', '三', '四', '五', '六']
+  const weekdays = [
+    t('common.weekdays.sun'),
+    t('common.weekdays.mon'),
+    t('common.weekdays.tue'),
+    t('common.weekdays.wed'),
+    t('common.weekdays.thu'),
+    t('common.weekdays.fri'),
+    t('common.weekdays.sat'),
+  ]
 
   return (
     <div className="calendar-grid">
@@ -109,8 +120,16 @@ function MonthCalendar({
   )
 }
 
-function getMonthName(year: number, month: number): string {
-  return `${year}年${month + 1}月`
+function getMonthName(year: number, month: number, t: (key: string) => string, i18nLanguage: string): string {
+  const monthKeys = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+  
+  if (i18nLanguage === 'en') {
+    // English format: "January 2025"
+    return `${t(`common.months.${monthKeys[month]}`)} ${year}`
+  }
+  
+  // Chinese format: "2025年1月"
+  return `${year}${t('common.year')}${month + 1}${t('common.month')}`
 }
 
 function getMonthStatus(

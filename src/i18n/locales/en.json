@@ -1,0 +1,142 @@
+{
+  "app": {
+    "title": "Australia Visa Condition 8558 Trip Planner",
+    "description": "Help you plan trips and verify compliance with Condition 8558 requirements",
+    "footer": "This tool is for reference only. Please refer to the official Australian Immigration documents for specific visa conditions."
+  },
+  "info": {
+    "title": "About Condition 8558",
+    "description": "<strong>Condition 8558</strong> is a common restriction on Australian visas that specifies:",
+    "rule1": "Within any consecutive <strong>18-month</strong> period",
+    "rule2": "The visa holder cannot stay in Australia for more than <strong>12 months</strong>",
+    "rule3": "This is a <strong>sliding window</strong> calculation, on a daily basis",
+    "note": "This tool helps you plan trips and verify compliance with this condition."
+  },
+  "visa": {
+    "title": "Visa Validity Period Setup",
+    "startDate": "Visa Start Date:",
+    "duration": "Validity Period:",
+    "endDate": "Visa End Date:",
+    "duration18": "18 months",
+    "duration36": "3 years",
+    "duration60": "5 years",
+    "duration120": "10 years",
+    "durationCustom": "Custom",
+    "startPlanning": "Start Planning",
+    "clearData": "Clear All Data",
+    "alerts": {
+      "enterStartDate": "Please enter visa start date",
+      "enterEndDate": "Please enter visa end date",
+      "endAfterStart": "End date must be after start date",
+      "confirmClear": "Are you sure you want to clear all data? This action cannot be undone."
+    }
+  },
+  "trip": {
+    "title": "Add Trip",
+    "editTitle": "Edit Trip",
+    "entryDate": "Entry Date:",
+    "exitDate": "Exit Date:",
+    "maxStay": "Max",
+    "add": "Add",
+    "update": "Update",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "planned": "Planned Trips",
+    "empty": "No trips yet",
+    "entry": "Entry:",
+    "exit": "Exit:",
+    "days": "Days:",
+    "daysUnit": " days",
+    "status": {
+      "valid": "✓ Valid",
+      "invalid": "✗ Invalid"
+    },
+    "alerts": {
+      "enterDates": "Please enter entry and exit dates",
+      "confirmDelete": "Are you sure you want to delete this trip?",
+      "selectEntry": "Please select entry date first",
+      "entryOutOfVisa": "Entry date is not within visa validity period",
+      "cannotEntry": "Cannot enter on this date, window full or trip conflict",
+      "maxStaySet": "Max stay period set: {{days}} days\nExit date: {{date}}"
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "visaPeriod": "Visa Validity Period",
+    "totalTrips": "Planned Trips",
+    "tripsUnit": " trips",
+    "totalDays": "Total Days in Australia",
+    "violationDays": "Violation Days",
+    "earliestEntry": "Earliest Entry",
+    "latestExit": "Latest Exit",
+    "warning": "⚠️ Warning: Your itinerary has {{days}} days that violate Condition 8558 regulations"
+  },
+  "calendar": {
+    "hint": "💡 Click on a date in the calendar to view the 18-month sliding window usage for that date",
+    "legend": {
+      "dateColors": "Date Colors:",
+      "monthColors": "Month Colors:",
+      "canEntry": "Can Enter",
+      "windowFull": "Window Full",
+      "validStay": "Valid Stay",
+      "violationStay": "Violation Stay",
+      "hasValidStay": "Has Valid Stay",
+      "partialWindowFull": "Partial Window Full",
+      "allWindowFull": "All Month Window Full",
+      "hasViolation": "Has Violation Stay"
+    }
+  },
+  "dateModal": {
+    "windowUsage": "📊 18-Month Sliding Window Usage",
+    "windowPeriod": "Window Period",
+    "used": "Used",
+    "remaining": "Remaining",
+    "affectingTrips": "Trips Affecting This Window",
+    "inExistingTrip": "📍 This date is within an existing trip",
+    "windowFullWarning": "⚠️ Window full, cannot enter on this date!",
+    "nextValidDate": "✅ Next Valid Entry Date",
+    "waitDays": "（Wait {{days}} days）",
+    "replanMaxStay": "💡 If replanning from this date, max consecutive stay:",
+    "maxStayFromDate": "✅ Starting from this date, max consecutive stay:",
+    "lowStayWarning": "⚠️ Warning: Low number of available days!",
+    "setAsEntry": "Set as Entry Date",
+    "setAsExit": "Set as Exit Date",
+    "close": "Close"
+  },
+  "common": {
+    "year": "",
+    "month": "",
+    "day": "Day",
+    "days": "days",
+    "weekdays": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "months": {
+      "jan": "January",
+      "feb": "February",
+      "mar": "March",
+      "apr": "April",
+      "may": "May",
+      "jun": "June",
+      "jul": "July",
+      "aug": "August",
+      "sep": "September",
+      "oct": "October",
+      "nov": "November",
+      "dec": "December"
+    }
+  },
+  "language": {
+    "switch": "Switch Language",
+    "en": "English",
+    "zh": "中文"
+  }
+}
+

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { formatDate, getToday } from '../utils/dateUtils'
 import './VisaSetup.css'
 
@@ -13,6 +14,7 @@ interface VisaSetupProps {
 }
 
 export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
+  const { t } = useTranslation()
   const [visaStart, setVisaStart] = useState('')
   const [duration, setDuration] = useState<
     '18' | '36' | '60' | '120' | 'custom'
@@ -23,7 +25,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
     e.preventDefault()
 
     if (!visaStart) {
-      alert('请输入签证开始日期')
+      alert(t('visa.alerts.enterStartDate'))
       return
     }
 
@@ -31,12 +33,12 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
 
     if (duration === 'custom') {
       if (!customEnd) {
-        alert('请输入签证结束日期')
+        alert(t('visa.alerts.enterEndDate'))
         return
       }
       const end = new Date(customEnd + 'T00:00:00')
       if (end <= start) {
-        alert('结束日期必须晚于开始日期')
+        alert(t('visa.alerts.endAfterStart'))
         return
       }
       onStart(start, duration, end)
@@ -46,7 +48,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
   }
 
   const handleClearData = () => {
-    if (confirm('确定要清除所有数据吗？此操作无法撤销。')) {
+    if (confirm(t('visa.alerts.confirmClear'))) {
       onClearData()
       setVisaStart('')
       setCustomEnd('')
@@ -56,11 +58,11 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
 
   return (
     <section className="visa-setup">
-      <h2>签证有效期设置</h2>
+      <h2>{t('visa.title')}</h2>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="visa-start">签证开始日期：</label>
+          <label htmlFor="visa-start">{t('visa.startDate')}</label>
           <input
             type="date"
             id="visa-start"
@@ -72,7 +74,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
         </div>
 
         <div className="form-group">
-          <label>有效期：</label>
+          <label>{t('visa.duration')}</label>
           <div className="duration-options">
             <label className="radio-label">
               <input
@@ -82,7 +84,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
                 checked={duration === '18'}
                 onChange={() => setDuration('18')}
               />
-              18个月
+              {t('visa.duration18')}
             </label>
             <label className="radio-label">
               <input
@@ -92,7 +94,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
                 checked={duration === '36'}
                 onChange={() => setDuration('36')}
               />
-              3年
+              {t('visa.duration36')}
             </label>
             <label className="radio-label">
               <input
@@ -102,7 +104,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
                 checked={duration === '60'}
                 onChange={() => setDuration('60')}
               />
-              5年
+              {t('visa.duration60')}
             </label>
             <label className="radio-label">
               <input
@@ -112,7 +114,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
                 checked={duration === '120'}
                 onChange={() => setDuration('120')}
               />
-              10年
+              {t('visa.duration120')}
             </label>
             <label className="radio-label">
               <input
@@ -122,14 +124,14 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
                 checked={duration === 'custom'}
                 onChange={() => setDuration('custom')}
               />
-              自定义
+              {t('visa.durationCustom')}
             </label>
           </div>
         </div>
 
         {duration === 'custom' && (
           <div className="form-group">
-            <label htmlFor="visa-end">签证结束日期：</label>
+            <label htmlFor="visa-end">{t('visa.endDate')}</label>
             <input
               type="date"
               id="visa-end"
@@ -143,7 +145,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
 
         <div className="form-actions">
           <button type="submit" className="primary-btn">
-            开始规划
+            {t('visa.startPlanning')}
           </button>
           {hasData && (
             <button
@@ -151,7 +153,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
               className="clear-btn"
               onClick={handleClearData}
             >
-              清除所有数据
+              {t('visa.clearData')}
             </button>
           )}
         </div>

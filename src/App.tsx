@@ -1,14 +1,17 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAppState } from './hooks/useAppState'
 import { VisaSetup } from './components/VisaSetup'
 import { TripManager } from './components/TripManager'
 import { StatsPanel } from './components/StatsPanel'
 import { Calendar } from './components/Calendar'
+import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { calculateStatistics } from './utils/tripUtils'
 import { formatDate } from './utils/dateUtils'
 import './styles/App.css'
 
 function App() {
+  const { t } = useTranslation()
   const {
     state,
     setVisaPeriod,
@@ -50,35 +53,23 @@ function App() {
 
   return (
     <div className="app">
+      <LanguageSwitcher />
       <header className="app-header">
-        <h1>澳洲签证 Condition 8558 行程规划器</h1>
-        <p className="app-description">
-          帮助您规划行程并验证是否符合 Condition 8558 的要求
-        </p>
+        <h1>{t('app.title')}</h1>
+        <p className="app-description">{t('app.description')}</p>
       </header>
 
       <main className="app-main">
         <section className="info-section">
-          <h2>关于 Condition 8558</h2>
+          <h2>{t('info.title')}</h2>
           <div className="info-box">
-            <p>
-              <strong>Condition 8558</strong>{' '}
-              是澳大利亚签证的一项常见限制条件，规定：
-            </p>
+            <p dangerouslySetInnerHTML={{ __html: t('info.description') }} />
             <ul>
-              <li>
-                在任意连续的 <strong>18个月</strong> 期间内
-              </li>
-              <li>
-                持有人在澳大利亚的停留时间不得超过 <strong>12个月</strong>
-              </li>
-              <li>
-                这是一个<strong>滑动窗口</strong>计算，以日为单位
-              </li>
+              <li dangerouslySetInnerHTML={{ __html: t('info.rule1') }} />
+              <li dangerouslySetInnerHTML={{ __html: t('info.rule2') }} />
+              <li dangerouslySetInnerHTML={{ __html: t('info.rule3') }} />
             </ul>
-            <p className="note">
-              本工具帮助您规划行程并验证是否符合此条件的要求。
-            </p>
+            <p className="note">{t('info.note')}</p>
           </div>
         </section>
 
@@ -127,7 +118,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>本工具仅供参考，具体签证条件请以澳大利亚移民局官方文件为准。</p>
+        <p>{t('app.footer')}</p>
       </footer>
     </div>
   )

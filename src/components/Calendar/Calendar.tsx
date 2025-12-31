@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { Trip } from '../../types'
 import { getMonthsBetween } from '../../utils/dateUtils'
 import { MonthBlock } from './MonthBlock'
@@ -20,6 +21,7 @@ export function Calendar({
   onSetEntryDate,
   onSetExitDate,
 }: CalendarProps) {
+  const { t } = useTranslation()
   const [expandedMonths, setExpandedMonths] = useState<Set<string>>(() => {
     // Default: expand first and last month
     const months = getMonthsBetween(visaStart, visaEnd)
@@ -69,40 +71,40 @@ export function Calendar({
   return (
     <div className="calendar-wrapper">
       <div className="calendar-hint">
-        💡 点击日历上的日期可查看该日期的18个月滑动窗口使用情况
+        {t('calendar.hint')}
       </div>
 
       <div className="calendar-legend">
         <div className="legend-section">
-          <strong>日期颜色：</strong>
+          <strong>{t('calendar.legend.dateColors')}</strong>
           <div className="legend-items">
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#f5f5f5', border: '1px solid #e0e0e0' }}
               />
-              <span className="legend-label">可入境</span>
+              <span className="legend-label">{t('calendar.legend.canEntry')}</span>
             </div>
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#fee2e2', border: '1px solid #fca5a5' }}
               />
-              <span className="legend-label">窗口已满</span>
+              <span className="legend-label">{t('calendar.legend.windowFull')}</span>
             </div>
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#a7f3d0', border: '1px solid #10b981' }}
               />
-              <span className="legend-label">合规停留</span>
+              <span className="legend-label">{t('calendar.legend.validStay')}</span>
             </div>
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#fecaca', border: '1px solid #ef4444' }}
               />
-              <span className="legend-label">违规停留</span>
+              <span className="legend-label">{t('calendar.legend.violationStay')}</span>
             </div>
           </div>
         </div>
@@ -110,35 +112,35 @@ export function Calendar({
         <div className="legend-divider" />
 
         <div className="legend-section">
-          <strong>月份颜色：</strong>
+          <strong>{t('calendar.legend.monthColors')}</strong>
           <div className="legend-items">
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#d1fae5' }}
               />
-              <span className="legend-label">有合规停留</span>
+              <span className="legend-label">{t('calendar.legend.hasValidStay')}</span>
             </div>
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#fef3c7' }}
               />
-              <span className="legend-label">部分窗口已满</span>
+              <span className="legend-label">{t('calendar.legend.partialWindowFull')}</span>
             </div>
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#fee2e2' }}
               />
-              <span className="legend-label">整月窗口已满</span>
+              <span className="legend-label">{t('calendar.legend.allWindowFull')}</span>
             </div>
             <div className="legend-item">
               <span
                 className="legend-color"
                 style={{ background: '#fecaca' }}
               />
-              <span className="legend-label">有违规停留</span>
+              <span className="legend-label">{t('calendar.legend.hasViolation')}</span>
             </div>
           </div>
         </div>

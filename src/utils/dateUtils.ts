@@ -21,9 +21,16 @@ export function formatDate(date: Date): string {
 }
 
 /**
- * Format a Date object for display (e.g., "2024年7月4日")
+ * Format a Date object for display
+ * Note: For i18n support, use formatDisplayDateI18n instead
+ * This function is kept for backward compatibility
  */
-export function formatDisplayDate(date: Date): string {
+export function formatDisplayDate(date: Date, locale?: string): string {
+  if (locale === 'en') {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
+  }
+  // Default to Chinese format
   return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
 }
 

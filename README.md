@@ -4,30 +4,36 @@ A modern Australian visa Condition 8558 trip planning tool built with React + Ty
 
 ## Features
 
-### 1. Visa Setup
+### 1. Multi-language Support
+- Default language: English
+- Supported languages: English (en) and Chinese (zh)
+- Easy language switching via top-right button
+- Language preference saved to localStorage
+
+### 2. Visa Setup
 - Input visa start date
 - Select visa validity period: 18 months, 3 years, 5 years, 10 years, or custom
 - Automatically calculate visa end date
 
-### 2. Trip Management
+### 2. Visa Setup
 - Add, edit, and delete entry/exit trips
 - Automatic trip validation
 - Detect trip overlaps
 - Real-time Condition 8558 compliance checking
 
-### 3. Statistics
+### 3. Trip Management
 - Display visa validity period
 - Count of planned trips
 - Total days in Australia
 - Violation days statistics
 - Earliest entry and latest exit dates
 
-### 4. Data Persistence
+### 4. Statistics
 - Auto-save to localStorage
 - Data persists after page refresh
 - One-click clear all data
 
-## About Condition 8558
+### 5. Data Persistence
 
 Condition 8558 is a common restriction on Australian visas:
 - Within any continuous **18-month** (548 days) period
@@ -40,6 +46,7 @@ Condition 8558 is a common restriction on Australian visas:
 - **Language**: TypeScript 5.6
 - **Build Tool**: Vite 6
 - **Package Manager**: pnpm
+- **Internationalization**: i18next + react-i18next
 - **Code Quality**: ESLint + Prettier
 - **Testing**: Vitest + Testing Library
 
@@ -48,11 +55,21 @@ Condition 8558 is a common restriction on Australian visas:
 ```
 src/
 ├── components/         # React components
+│   ├── Calendar/           # Calendar-related components
+│   │   ├── Calendar.tsx
+│   │   ├── MonthBlock.tsx
+│   │   └── DateModal.tsx
+│   ├── LanguageSwitcher.tsx # Language switcher component
 │   ├── VisaSetup.tsx       # Visa setup component
 │   ├── TripManager.tsx     # Trip management component
 │   └── StatsPanel.tsx      # Statistics panel component
 ├── hooks/             # Custom hooks
 │   └── useAppState.ts      # Application state management
+├── i18n/              # Internationalization
+│   ├── config.ts           # i18n configuration
+│   └── locales/            # Translation files
+│       ├── en.json         # English translations
+│       └── zh.json         # Chinese translations
 ├── utils/             # Utility functions
 │   ├── dateUtils.ts        # Date manipulation utilities
 │   ├── validator.ts        # Condition 8558 validation logic
