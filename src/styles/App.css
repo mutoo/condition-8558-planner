@@ -9,10 +9,10 @@
   text-align: center;
   margin-bottom: 2rem;
   padding: 2.5rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #2563eb;
   color: white;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -112,6 +112,41 @@
   border-radius: 4px;
 }
 
+/* Disclaimer box styling */
+.disclaimer-box {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-left: 4px solid #f59e0b;
+}
+
+.disclaimer-box h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.disclaimer-box p {
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+  color: #78350f;
+}
+
+.disclaimer-box p:last-of-type {
+  margin-bottom: 0;
+}
+
+.disclaimer-box .warning-note {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 4px;
+  font-weight: 600;
+  color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
 .app-footer {
   margin-top: 3rem;
   padding: 2rem 0;
@@ -139,7 +174,7 @@
   overflow-y: auto;
   /* Custom scrollbar */
   scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  scrollbar-color: rgba(37, 99, 235, 0.3) transparent;
 }
 
 .left-column::-webkit-scrollbar {
@@ -151,12 +186,12 @@
 }
 
 .left-column::-webkit-scrollbar-thumb {
-  background-color: rgba(139, 92, 246, 0.3);
+  background-color: rgba(37, 99, 235, 0.3);
   border-radius: 4px;
 }
 
 .left-column::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(139, 92, 246, 0.5);
+  background-color: rgba(37, 99, 235, 0.5);
 }
 
 .right-column {
@@ -204,6 +239,21 @@
 
   .info-box {
     padding: 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .disclaimer-box h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .disclaimer-box p {
+    font-size: 0.875rem;
+    margin-bottom: 0.625rem;
+  }
+
+  .disclaimer-box .warning-note {
+    padding: 0.625rem;
     font-size: 0.875rem;
   }
   

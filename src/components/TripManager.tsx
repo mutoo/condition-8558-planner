@@ -21,6 +21,7 @@ interface TripManagerProps {
   onDeleteTrip: (id: string) => void
   initialEntryDate?: string
   initialExitDate?: string
+  onDateClick?: (dateString: string) => void
 }
 
 export function TripManager({
@@ -32,6 +33,7 @@ export function TripManager({
   onDeleteTrip,
   initialEntryDate,
   initialExitDate,
+  onDateClick,
 }: TripManagerProps) {
   const { t, i18n } = useTranslation()
   const [newEntryDate, setNewEntryDate] = useState('')
@@ -246,13 +248,21 @@ export function TripManager({
                       <div className="trip-info">
                         <div className="trip-dates">
                           <span className="trip-label">{t('trip.entry')}</span>
-                          <span className="trip-date">
+                          <span 
+                            className="trip-date clickable"
+                            onClick={() => onDateClick?.(trip.entry)}
+                            title={t('trip.entry')}
+                          >
                             {formatDisplayDate(entry, i18n.language)}
                           </span>
                         </div>
                         <div className="trip-dates">
                           <span className="trip-label">{t('trip.exit')}</span>
-                          <span className="trip-date">
+                          <span 
+                            className="trip-date clickable"
+                            onClick={() => onDateClick?.(trip.exit)}
+                            title={t('trip.exit')}
+                          >
                             {formatDisplayDate(exit, i18n.language)}
                           </span>
                         </div>

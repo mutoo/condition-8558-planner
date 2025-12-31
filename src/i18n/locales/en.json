@@ -10,7 +10,14 @@
     "rule1": "Within any consecutive <strong>18-month</strong> period",
     "rule2": "The visa holder cannot stay in Australia for more than <strong>12 months</strong>",
     "rule3": "This is a <strong>sliding window</strong> calculation, on a daily basis",
-    "note": "This tool helps you plan trips and verify compliance with this condition."
+    "note": "This tool helps you plan trips and verify compliance with this condition.",
+    "disclaimer": {
+      "title": "Application Settings & Disclaimer",
+      "officialDefinition": "The Australian Department of Home Affairs does not provide strict mathematical definitions for \"18 months\" and \"12 months\", allowing immigration judges greater discretion.",
+      "appDefinition": "For calculation purposes, this application defines <strong>12 months as 365 days</strong> and <strong>18 months as 548 days</strong>.",
+      "entryExitRule": "Both entry and exit days are counted as time spent in Australia.",
+      "warning": "This tool is for reference only and does not constitute legal advice. Please consult a professional migration agent or lawyer for accurate legal guidance."
+    }
   },
   "visa": {
     "title": "Visa Validity Period Setup",

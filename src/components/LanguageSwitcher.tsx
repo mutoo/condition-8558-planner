@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Globe } from 'lucide-react'
 import './LanguageSwitcher.css'
 
 export function LanguageSwitcher() {
@@ -17,7 +18,8 @@ export function LanguageSwitcher() {
         onClick={toggleLanguage}
         title={t('language.switch')}
       >
-        {i18n.language === 'en' ? '中文' : 'English'}
+        <Globe size={16} />
+        <span>{i18n.language === 'en' ? '中文' : 'English'}</span>
       </button>
     </div>
   )

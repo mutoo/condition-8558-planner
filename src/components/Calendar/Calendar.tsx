@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useImperativeHandle, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Trip } from '../../types'
 import { getMonthsBetween } from '../../utils/dateUtils'
@@ -14,13 +14,17 @@ interface CalendarProps {
   onSetExitDate: (date: Date) => void
 }
 
-export function Calendar({
+export interface CalendarRef {
+  scrollToDate: (date: Date) => void
+}
+
+export const Calendar = forwardRef<CalendarRef, CalendarProps>(({
   visaStart,
   visaEnd,
   trips,
   onSetEntryDate,
   onSetExitDate,
-}: CalendarProps) {
+}, ref) => {
   const { t } = useTranslation()
   const [expandedMonths, setExpandedMonths] = useState<Set<string>>(() => {
     // Default: expand first and last month
@@ -49,6 +53,31 @@ export function Calendar({
       return next
     })
   }
+  
+  const scrollToDate = (date: Date) => {
+    const year = date.getFullYear()
+    const month = date.getMonth()
+    const key = `${year}-${month}`
+    
+    // Expand the month
+    setExpandedMonths(prev => {
+      const next = new Set(prev)
+      next.add(key)
+      return next
+    })
+    
+    // Scroll to the month
+    setTimeout(() => {
+      const element = document.getElementById(`month-${key}`)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 100)
+  }
+  
+  useImperativeHandle(ref, () => ({
+    scrollToDate
+  }))
 
   const handleDateClick = (date: Date) => {
     setSelectedDate(date)
@@ -154,17 +183,18 @@ export function Calendar({
           const isExpanded = expandedMonths.has(key)
 
           return (
-            <MonthBlock
-              key={key}
-              year={year}
-              month={month}
-              isExpanded={isExpanded}
-              visaStart={visaStart}
-              visaEnd={visaEnd}
-              trips={trips}
-              onToggle={() => toggleMonth(year, month)}
-              onDateClick={handleDateClick}
-            />
+            <div key={key} id={`month-${key}`}>
+              <MonthBlock
+                year={year}
+                month={month}
+                isExpanded={isExpanded}
+                visaStart={visaStart}
+                visaEnd={visaEnd}
+                trips={trips}
+                onToggle={() => toggleMonth(year, month)}
+                onDateClick={handleDateClick}
+              />
+            </div>
           )
         })}
       </div>
@@ -182,4 +212,4 @@ export function Calendar({
       )}
     </div>
   )
-}
+})

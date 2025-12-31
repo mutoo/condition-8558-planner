@@ -1,13 +1,13 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppState } from './hooks/useAppState'
 import { VisaSetup } from './components/VisaSetup'
 import { TripManager } from './components/TripManager'
 import { StatsPanel } from './components/StatsPanel'
-import { Calendar } from './components/Calendar'
+import { Calendar, type CalendarRef } from './components/Calendar'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { calculateStatistics } from './utils/tripUtils'
-import { formatDate } from './utils/dateUtils'
+import { formatDate, parseDate } from './utils/dateUtils'
 import './styles/App.css'
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
 
   const [selectedEntryDate, setSelectedEntryDate] = useState<string>('')
   const [selectedExitDate, setSelectedExitDate] = useState<string>('')
+  const calendarRef = useRef<CalendarRef>(null)
 
   const hasStarted = state.visaStart !== null && state.visaEnd !== null
   const stats = hasStarted
@@ -50,6 +51,11 @@ function App() {
       })
     }, 100)
   }
+  
+  const handleTripDateClick = (dateString: string) => {
+    const date = parseDate(dateString)
+    calendarRef.current?.scrollToDate(date)
+  }
 
   return (
     <div className="app">
@@ -70,6 +76,14 @@ function App() {
               <li dangerouslySetInnerHTML={{ __html: t('info.rule3') }} />
             </ul>
             <p className="note">{t('info.note')}</p>
+          </div>
+
+          <div className="info-box disclaimer-box">
+            <h3>{t('info.disclaimer.title')}</h3>
+            <p>{t('info.disclaimer.officialDefinition')}</p>
+            <p dangerouslySetInnerHTML={{ __html: t('info.disclaimer.appDefinition') }} />
+            <p>{t('info.disclaimer.entryExitRule')}</p>
+            <p className="warning-note">{t('info.disclaimer.warning')}</p>
           </div>
         </section>
 
@@ -92,6 +106,7 @@ function App() {
                   onDeleteTrip={deleteTrip}
                   initialEntryDate={selectedEntryDate}
                   initialExitDate={selectedExitDate}
+                  onDateClick={handleTripDateClick}
                 />
               </div>
 
@@ -106,6 +121,7 @@ function App() {
 
             <div className="right-column">
               <Calendar
+                ref={calendarRef}
                 visaStart={state.visaStart!}
                 visaEnd={state.visaEnd!}
                 trips={state.trips}
