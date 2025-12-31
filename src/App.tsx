@@ -82,14 +82,6 @@ function App() {
         {hasStarted && (
           <div className="two-column-layout">
             <div className="left-column">
-              {stats && state.visaStart && state.visaEnd && (
-                <StatsPanel
-                  stats={stats}
-                  visaStart={state.visaStart}
-                  visaEnd={state.visaEnd}
-                />
-              )}
-
               <div id="trip-section">
                 <TripManager
                   trips={state.trips}
@@ -102,6 +94,14 @@ function App() {
                   initialExitDate={selectedExitDate}
                 />
               </div>
+
+              {stats && state.visaStart && state.visaEnd && (
+                <StatsPanel
+                  stats={stats}
+                  visaStart={state.visaStart}
+                  visaEnd={state.visaEnd}
+                />
+              )}
             </div>
 
             <div className="right-column">

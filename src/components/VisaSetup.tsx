@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Play, Trash2 } from 'lucide-react'
 import { formatDate, getToday } from '../utils/dateUtils'
 import './VisaSetup.css'
 
@@ -145,7 +146,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
 
         <div className="form-actions">
           <button type="submit" className="primary-btn">
-            {t('visa.startPlanning')}
+            <Play size={16} /> {t('visa.startPlanning')}
           </button>
           {hasData && (
             <button
@@ -153,7 +154,7 @@ export function VisaSetup({ onStart, onClearData, hasData }: VisaSetupProps) {
               className="clear-btn"
               onClick={handleClearData}
             >
-              {t('visa.clearData')}
+              <Trash2 size={16} /> {t('visa.clearData')}
             </button>
           )}
         </div>

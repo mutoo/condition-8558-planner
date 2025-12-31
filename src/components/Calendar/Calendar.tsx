@@ -70,10 +70,6 @@ export function Calendar({
 
   return (
     <div className="calendar-wrapper">
-      <div className="calendar-hint">
-        {t('calendar.hint')}
-      </div>
-
       <div className="calendar-legend">
         <div className="legend-section">
           <strong>{t('calendar.legend.dateColors')}</strong>
@@ -88,16 +84,16 @@ export function Calendar({
             <div className="legend-item">
               <span
                 className="legend-color"
-                style={{ background: '#fee2e2', border: '1px solid #fca5a5' }}
+                style={{ background: '#a7f3d0', border: '1px solid #10b981' }}
               />
-              <span className="legend-label">{t('calendar.legend.windowFull')}</span>
+              <span className="legend-label">{t('calendar.legend.validStay')}</span>
             </div>
             <div className="legend-item">
               <span
                 className="legend-color"
-                style={{ background: '#a7f3d0', border: '1px solid #10b981' }}
+                style={{ background: '#fee2e2', border: '1px solid #fca5a5' }}
               />
-              <span className="legend-label">{t('calendar.legend.validStay')}</span>
+              <span className="legend-label">{t('calendar.legend.windowFull')}</span>
             </div>
             <div className="legend-item">
               <span
@@ -144,6 +140,10 @@ export function Calendar({
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="calendar-hint">
+        {t('calendar.hint')}
       </div>
 
       <div className="calendar-container">

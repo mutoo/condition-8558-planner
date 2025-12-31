@@ -1,23 +1,46 @@
 .trip-manager {
   background: white;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.trip-manager:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .trip-manager h2 {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   font-size: 1.5rem;
-  color: #333;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.trips-list {
+  margin-bottom: 3rem;
+}
+
+.trips-list h2 {
+  margin-bottom: 1.5rem;
+}
+
+.add-trip-section {
+  padding-top: 2rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.add-trip-section h2 {
+  margin-bottom: 1.5rem;
 }
 
 .trip-form {
-  margin-bottom: 3rem;
+  margin-bottom: 0;
 }
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   align-items: flex-end;
 }
@@ -69,6 +92,9 @@
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .max-btn:hover {
@@ -83,8 +109,9 @@
 
 .form-buttons {
   display: flex;
-  flex-direction: column;
   gap: 0.75rem;
+  margin-top: 1.5rem;
+  justify-content: flex-start;
 }
 
 .secondary-btn,
@@ -99,11 +126,17 @@
   cursor: pointer;
   transition: all 0.2s;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .secondary-btn {
   background: #10b981;
   color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .secondary-btn:hover {
@@ -120,7 +153,6 @@
 }
 
 .trips-list {
-  margin-top: 3rem;
 }
 
 .trips-list h3 {
@@ -152,18 +184,18 @@
 
 .trip-item {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
   padding: 1.5rem;
   border: 2px solid #e5e7eb;
-  border-radius: 8px;
-  transition: all 0.2s;
+  border-radius: 12px;
+  transition: all 0.3s ease;
   background: white;
 }
 
-.trip-item:hover {
-  border-color: #2563eb;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+.trip-item:hover:not(.editing) {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
 }
 
 .trip-item.valid {
@@ -177,43 +209,31 @@
 }
 
 .trip-item.editing {
-  border-color: #10b981;
-  background: #ecfdf5;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  border-color: #8b5cf6;
+  background: #f5f3ff;
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.25);
 }
 
+/* Trip display (non-editing) */
 .trip-info {
   display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 2.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
   flex: 1;
-  align-items: center;
+  align-items: start;
+  margin-bottom: 1rem;
 }
 
 .trip-dates {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-}
-
-.trip-duration {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.trip-status {
-  grid-column: 1 / -1;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e5e7eb;
-  font-size: 0.95rem;
+  gap: 0.375rem;
 }
 
 .trip-label {
   color: #6b7280;
-  font-weight: 500;
-  font-size: 0.85rem;
+  font-weight: 600;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -221,102 +241,296 @@
 .trip-date {
   color: #111827;
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.125rem;
+}
+
+.trip-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Trip footer */
+.trip-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(0, 0, 0, 0.05);
+  margin-top: 0.5rem;
+}
+
+.trip-days-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  white-space: nowrap;
 }
 
 .trip-days {
   color: #8b5cf6;
   font-weight: 700;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
+}
+
+.trip-status {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.6;
 }
 
 .status-valid {
   color: #10b981;
-  font-weight: 600;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.375rem;
+  flex-wrap: wrap;
 }
 
 .status-invalid {
   color: #ef4444;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  line-height: 1.6;
+}
+
+/* In-place editing */
+.trip-edit-form {
   display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.trip-edit-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.trip-edit-dates .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.trip-edit-dates .form-group label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.trip-edit-dates input[type='date'] {
+  padding: 0.625rem;
+  border: 2px solid #ddd6fe;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.trip-edit-dates input[type='date']:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.trip-edit-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.save-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.trip-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-left: 1.5rem;
+.save-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.cancel-btn {
+  background: #6b7280;
+  color: white;
+  border: none;
+  padding: 0.625rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cancel-btn:hover {
+  background: #4b5563;
+}
+
+.max-btn-small {
+  padding: 0.625rem 1rem;
+  background: #8b5cf6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.max-btn-small:hover {
+  background: #7c3aed;
+  transform: translateY(-1px);
 }
 
 .edit-btn {
   background: #3b82f6;
   color: white;
-  padding: 0.65rem 1.25rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .edit-btn:hover {
   background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .delete-btn {
   background: #ef4444;
   color: white;
-  padding: 0.65rem 1.25rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .delete-btn:hover {
   background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 @media (max-width: 768px) {
   .trip-manager {
-    padding: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .trip-manager h2 {
+    font-size: 1.25rem;
+  }
+  
+  .form-group label {
+    font-size: 0.875rem;
+  }
+  
+  input[type='date'] {
+    font-size: 0.875rem;
   }
 
   .form-row {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   .form-buttons {
     width: 100%;
+    margin-top: 1rem;
   }
 
   .secondary-btn,
   .cancel-btn {
     width: 100%;
+    font-size: 0.9rem;
+  }
+  
+  .max-btn {
+    font-size: 0.85rem;
   }
 
   .trip-item {
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1.25rem;
+    padding: 1rem;
+  }
+  
+  .trip-label {
+    font-size: 0.8rem;
+  }
+  
+  .trip-date {
+    font-size: 0.875rem;
   }
 
   .trip-info {
     grid-template-columns: 1fr;
-    gap: 1rem;
-    width: 100%;
-  }
-
-  .trip-status {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
+    gap: 0.875rem;
   }
 
   .trip-actions {
-    width: 100%;
-    margin-left: 0;
     flex-direction: row;
+    width: 100%;
+    gap: 0.5rem;
   }
 
   .edit-btn,
   .delete-btn {
     flex: 1;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .trip-edit-dates {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .trip-edit-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+  
+  .trip-days {
+    font-size: 1.25rem;
+  }
+  
+  .trip-status {
+    font-size: 0.875rem;
   }
 }

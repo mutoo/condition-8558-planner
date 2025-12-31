@@ -16,6 +16,28 @@
   - Date modal dates
   - Calendar month headers
 
+### Improved
+- 🎨 **Major UI/UX Enhancement**
+  - Optimized font stack for better Chinese/English display
+  - Added language-specific font optimizations (`:lang(zh)` and `:lang(en)`)
+  - Improved typography with better line-height and letter-spacing
+- ✨ **Visual Design Upgrade**
+  - Enhanced app header with gradient background and decorative effects
+  - Upgraded language switcher with gradient button and glow animation
+  - Added hover effects and transitions to all interactive elements
+  - Improved form inputs with better focus states and shadows
+  - Enhanced statistics panel with gradient cards and hover animations
+  - Updated buttons with gradient backgrounds and lift effects
+- 🎯 **Better Visual Hierarchy**
+  - Increased border radius for modern look (8px → 12px)
+  - Enhanced shadows for better depth perception
+  - Added decorative elements and icons
+  - Improved color contrast and readability
+- 📱 **Responsive Design**
+  - Optimized mobile experience
+  - Better touch targets
+  - Adaptive font sizes and spacing
+
 ### Added
 - 🌐 Multi-language support with i18next and react-i18next
   - Default language: English (en)

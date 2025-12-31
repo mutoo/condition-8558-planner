@@ -47,19 +47,27 @@ export function validateTrip(
   trip: Trip,
   existingTrips: Trip[],
   visaStart: Date,
-  visaEnd: Date
+  visaEnd: Date,
+  t?: (key: string, params?: Record<string, string>) => string,
+  locale?: string
 ): ValidationResult {
   const entry = parseDate(trip.entry)
   const exit = parseDate(trip.exit)
 
   // Check if date range is valid
   if (entry > exit) {
-    return { valid: false, reason: '出境日期必须晚于或等于入境日期' }
+    return { 
+      valid: false, 
+      reason: t ? t('trip.validation.exitAfterEntry') : 'Exit date must be after or equal to entry date'
+    }
   }
 
   // Check if trip is within visa validity period
   if (entry < visaStart || exit > visaEnd) {
-    return { valid: false, reason: '行程不在签证有效期内' }
+    return { 
+      valid: false, 
+      reason: t ? t('trip.validation.outsideVisaPeriod') : 'Trip is outside visa validity period'
+    }
   }
 
   // Check for overlaps with existing trips
@@ -70,7 +78,10 @@ export function validateTrip(
     const existingExit = parseDate(existingTrip.exit)
 
     if (entry <= existingExit && exit >= existingEntry) {
-      return { valid: false, reason: '行程与现有行程重叠' }
+      return { 
+        valid: false, 
+        reason: t ? t('trip.validation.overlap') : 'Trip overlaps with existing trip'
+      }
     }
   }
 
@@ -80,15 +91,29 @@ export function validateTrip(
 
   while (currentDate <= exit) {
     if (isViolation(currentDate, allTrips)) {
+      // Format date based on locale
+      let dateStr: string
+      if (locale === 'zh') {
+        dateStr = `${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月${currentDate.getDate()}日`
+      } else {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        dateStr = `${months[currentDate.getMonth()]} ${currentDate.getDate()}, ${currentDate.getFullYear()}`
+      }
+      
       return {
         valid: false,
-        reason: `在 ${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月${currentDate.getDate()}日 违反 Condition 8558（18个月内超过12个月）`,
+        reason: t 
+          ? t('trip.validation.violation', { date: dateStr })
+          : `Violates Condition 8558 on ${dateStr} (exceeds 12 months within 18 months)`,
       }
     }
     currentDate = addDays(currentDate, 1)
   }
 
-  return { valid: true, reason: '行程合法' }
+  return { 
+    valid: true, 
+    reason: t ? t('trip.validation.legal') : 'Valid'
+  }
 }
 
 /**

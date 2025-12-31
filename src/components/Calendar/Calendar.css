@@ -96,6 +96,14 @@
   transition: all 0.3s;
 }
 
+/* Sans-serif monospace font for English month headers for better alignment */
+.month-header[data-locale="en"] {
+  font-family: 'Roboto Mono', 'Menlo', 'JetBrains Mono', 'Source Code Pro', 
+               'Consolas', 'SF Mono', 'Courier New', monospace;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+}
+
 .month-header:hover {
   background: #f5f3ff;
 }
@@ -141,7 +149,7 @@
 .calendar-header-cell {
   text-align: center;
   font-weight: 700;
-  padding: 10px 8px;
+  padding: 10px 4px;
   color: #555;
   font-size: 0.9em;
 }
@@ -268,7 +276,7 @@
 
 .modal-header {
   padding: 24px 28px;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: #6366f1;
   color: white;
   border-radius: 12px 12px 0 0;
   display: flex;
@@ -446,43 +454,76 @@
 
 @media (max-width: 768px) {
   .calendar-wrapper {
-    padding: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .calendar-hint {
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
   }
 
   .calendar-legend {
-    padding: 15px;
-    gap: 15px;
+    padding: 0.875rem;
+    gap: 0.875rem;
+  }
+  
+  .legend-section strong {
+    font-size: 0.8rem;
+  }
+  
+  .legend-item {
+    font-size: 0.8rem;
   }
 
   .legend-items {
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
   .month-header {
-    padding: 15px 20px;
-    font-size: 1em;
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
   }
 
   .month-calendar {
-    padding: 15px;
+    padding: 0.875rem;
   }
 
   .calendar-grid {
-    gap: 4px;
+    gap: 2px;
+  }
+  
+  .calendar-header-cell {
+    padding: 6px 2px;
+    font-size: 0.7rem;
+    font-weight: 600;
   }
 
   .calendar-day {
-    font-size: 0.8em;
+    font-size: 0.7rem;
+    min-height: 30px;
   }
 
   .modal-content {
     width: 95%;
-    margin: 10% auto;
+    margin: 1rem auto;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.1rem;
   }
 
   .modal-body {
-    padding: 20px;
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .window-info h4 {
+    font-size: 0.95rem;
+  }
+  
+  .info-grid {
+    font-size: 0.875rem;
   }
 
   .modal-actions {
@@ -491,5 +532,6 @@
 
   .action-btn {
     width: 100%;
+    font-size: 0.9rem;
   }
 }

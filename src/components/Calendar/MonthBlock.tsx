@@ -30,7 +30,11 @@ export function MonthBlock({
 
   return (
     <div className={`month-block ${isExpanded ? 'expanded' : ''}`}>
-      <div className={`month-header ${monthStatus}`} onClick={onToggle}>
+      <div 
+        className={`month-header ${monthStatus}`} 
+        data-locale={i18n.language}
+        onClick={onToggle}
+      >
         <span>{monthName}</span>
         <span className="expand-icon">▼</span>
       </div>
@@ -121,11 +125,10 @@ function MonthCalendar({
 }
 
 function getMonthName(year: number, month: number, t: (key: string) => string, i18nLanguage: string): string {
-  const monthKeys = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
-  
   if (i18nLanguage === 'en') {
-    // English format: "January 2025"
-    return `${t(`common.months.${monthKeys[month]}`)} ${year}`
+    // English format with 3-letter abbreviation: "Jan 2025"
+    const monthAbbr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    return `${monthAbbr[month]} ${year}`
   }
   
   // Chinese format: "2025年1月"

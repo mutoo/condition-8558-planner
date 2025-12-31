@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Edit2, Trash2, Save, X, CheckCircle, XCircle, Plus } from 'lucide-react'
 import type { Trip } from '../types'
 import {
   formatDate,
@@ -33,69 +34,87 @@ export function TripManager({
   initialExitDate,
 }: TripManagerProps) {
   const { t, i18n } = useTranslation()
-  const [entryDate, setEntryDate] = useState('')
-  const [exitDate, setExitDate] = useState('')
+  const [newEntryDate, setNewEntryDate] = useState('')
+  const [newExitDate, setNewExitDate] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [editEntry, setEditEntry] = useState('')
+  const [editExit, setEditExit] = useState('')
 
   // Update dates when initial values change (from calendar)
   useEffect(() => {
     if (initialEntryDate) {
-      setEntryDate(initialEntryDate)
+      setNewEntryDate(initialEntryDate)
     }
   }, [initialEntryDate])
 
   useEffect(() => {
     if (initialExitDate) {
-      setExitDate(initialExitDate)
+      setNewExitDate(initialExitDate)
     }
   }, [initialExitDate])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleAddTrip = (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!entryDate || !exitDate) {
+    if (!newEntryDate || !newExitDate) {
       alert(t('trip.alerts.enterDates'))
       return
     }
 
     const trip: Trip = {
-      id: editingId || 'temp',
-      entry: entryDate,
-      exit: exitDate,
+      id: 'temp',
+      entry: newEntryDate,
+      exit: newExitDate,
     }
 
-    const existingTrips = editingId
-      ? trips.filter(t => t.id !== editingId)
-      : trips
-
-    const validation = validateTrip(trip, existingTrips, visaStart, visaEnd)
+    const validation = validateTrip(trip, trips, visaStart, visaEnd, t, i18n.language)
 
     if (!validation.valid) {
       alert(validation.reason)
       return
     }
 
-    if (editingId) {
-      onUpdateTrip(editingId, entryDate, exitDate)
-      setEditingId(null)
-    } else {
-      onAddTrip(entryDate, exitDate)
-    }
-
-    setEntryDate('')
-    setExitDate('')
+    onAddTrip(newEntryDate, newExitDate)
+    setNewEntryDate('')
+    setNewExitDate('')
   }
 
-  const handleEdit = (trip: Trip) => {
+  const handleStartEdit = (trip: Trip) => {
     setEditingId(trip.id)
-    setEntryDate(trip.entry)
-    setExitDate(trip.exit)
+    setEditEntry(trip.entry)
+    setEditExit(trip.exit)
+  }
+
+  const handleSaveEdit = (id: string) => {
+    if (!editEntry || !editExit) {
+      alert(t('trip.alerts.enterDates'))
+      return
+    }
+
+    const trip: Trip = {
+      id,
+      entry: editEntry,
+      exit: editExit,
+    }
+
+    const otherTrips = trips.filter(t => t.id !== id)
+    const validation = validateTrip(trip, otherTrips, visaStart, visaEnd, t, i18n.language)
+
+    if (!validation.valid) {
+      alert(validation.reason)
+      return
+    }
+
+    onUpdateTrip(id, editEntry, editExit)
+    setEditingId(null)
+    setEditEntry('')
+    setEditExit('')
   }
 
   const handleCancelEdit = () => {
     setEditingId(null)
-    setEntryDate('')
-    setExitDate('')
+    setEditEntry('')
+    setEditExit('')
   }
 
   const handleDelete = (id: string) => {
@@ -107,23 +126,21 @@ export function TripManager({
     }
   }
 
-  const handleSetMaxExit = () => {
-    if (!entryDate) {
+  const handleSetMaxExit = (currentEntry: string, isEditing: boolean) => {
+    if (!currentEntry) {
       alert(t('trip.alerts.selectEntry'))
       return
     }
 
-    const entry = parseDate(entryDate)
+    const entry = parseDate(currentEntry)
 
-    // Check if entry date is within visa validity
     if (entry < visaStart || entry > visaEnd) {
       alert(t('trip.alerts.entryOutOfVisa'))
       return
     }
 
-    // Filter out trips that include the entry date
     const relevantTrips = trips.filter(trip => {
-      if (trip.id === editingId) return false // Exclude current editing trip
+      if (isEditing && trip.id === editingId) return false
       const tripStart = parseDate(trip.entry)
       const tripEnd = parseDate(trip.exit)
       return !(entry >= tripStart && entry <= tripEnd)
@@ -136,138 +153,143 @@ export function TripManager({
       return
     }
 
-    // Calculate max exit date
     const maxExitDate = addDays(entry, maxDays - 1)
     const exitDateStr = formatDate(maxExitDate)
 
-    setExitDate(exitDateStr)
+    if (isEditing) {
+      setEditExit(exitDateStr)
+    } else {
+      setNewExitDate(exitDateStr)
+    }
+    
     alert(t('trip.alerts.maxStaySet', { days: maxDays, date: exitDateStr }))
   }
 
   return (
     <section className="trip-manager">
-      <h2>{editingId ? t('trip.editTitle') : t('trip.title')}</h2>
-
-      <form onSubmit={handleSubmit} className="trip-form">
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="entry-date">{t('trip.entryDate')}</label>
-            <input
-              type="date"
-              id="entry-date"
-              value={entryDate}
-              onChange={e => setEntryDate(e.target.value)}
-              min={formatDate(visaStart)}
-              max={formatDate(visaEnd)}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="exit-date">{t('trip.exitDate')}</label>
-            <div className="date-input-with-button">
-              <input
-                type="date"
-                id="exit-date"
-                value={exitDate}
-                onChange={e => setExitDate(e.target.value)}
-                min={entryDate || formatDate(visaStart)}
-                max={formatDate(visaEnd)}
-                required
-              />
-              <button
-                type="button"
-                className="max-btn"
-                onClick={handleSetMaxExit}
-                title={t('trip.maxStay')}
-              >
-                {t('trip.maxStay')}
-              </button>
-            </div>
-          </div>
-
-          <div className="form-buttons">
-            <button type="submit" className="secondary-btn">
-              {editingId ? t('trip.update') : t('trip.add')}
-            </button>
-            {editingId && (
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={handleCancelEdit}
-              >
-                {t('trip.cancel')}
-              </button>
-            )}
-          </div>
-        </div>
-      </form>
-
       {trips.length > 0 ? (
         <div className="trips-list">
-          <h3>{t('trip.planned')}</h3>
+          <h2>{t('trip.planned')}</h2>
           <div className="trip-items">
             {trips.map(trip => {
-              const entry = parseDate(trip.entry)
-              const exit = parseDate(trip.exit)
-              const days = daysBetween(entry, exit) + 1 // Include both entry and exit days
+              const isEditing = editingId === trip.id
+              const entry = parseDate(isEditing ? editEntry : trip.entry)
+              const exit = parseDate(isEditing ? editExit : trip.exit)
+              const days = daysBetween(entry, exit) + 1
 
-              // Validate trip against other trips
               const otherTrips = trips.filter(t => t.id !== trip.id)
               const validation = validateTrip(
-                trip,
+                { id: trip.id, entry: isEditing ? editEntry : trip.entry, exit: isEditing ? editExit : trip.exit },
                 otherTrips,
                 visaStart,
-                visaEnd
+                visaEnd,
+                t,
+                i18n.language
               )
 
               return (
                 <div
                   key={trip.id}
-                  className={`trip-item ${validation.valid ? 'valid' : 'invalid'} ${editingId === trip.id ? 'editing' : ''}`}
+                  className={`trip-item ${validation.valid ? 'valid' : 'invalid'} ${isEditing ? 'editing' : ''}`}
                 >
-                  <div className="trip-info">
-                    <div className="trip-dates">
-                      <span className="trip-label">{t('trip.entry')}</span>
-                      <span className="trip-date">
-                        {formatDisplayDate(entry, i18n.language)}
-                      </span>
+                  {isEditing ? (
+                    <div className="trip-edit-form">
+                      <div className="trip-edit-dates">
+                        <div className="form-group">
+                          <label>{t('trip.entry')}</label>
+                          <input
+                            type="date"
+                            value={editEntry}
+                            onChange={e => setEditEntry(e.target.value)}
+                            min={formatDate(visaStart)}
+                            max={formatDate(visaEnd)}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>{t('trip.exit')}</label>
+                          <div className="date-input-with-button">
+                            <input
+                              type="date"
+                              value={editExit}
+                              onChange={e => setEditExit(e.target.value)}
+                              min={editEntry || formatDate(visaStart)}
+                              max={formatDate(visaEnd)}
+                            />
+                            <button
+                              type="button"
+                              className="max-btn-small"
+                              onClick={() => handleSetMaxExit(editEntry, true)}
+                              title={t('trip.maxStay')}
+                            >
+                              {t('trip.maxStay')}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="trip-edit-actions">
+                        <button
+                          className="save-btn"
+                          onClick={() => handleSaveEdit(trip.id)}
+                        >
+                          <Save size={16} /> {t('trip.update')}
+                        </button>
+                        <button
+                          className="cancel-btn"
+                          onClick={handleCancelEdit}
+                        >
+                          <X size={16} /> {t('trip.cancel')}
+                        </button>
+                      </div>
                     </div>
-                    <div className="trip-dates">
-                      <span className="trip-label">{t('trip.exit')}</span>
-                      <span className="trip-date">
-                        {formatDisplayDate(exit, i18n.language)}
-                      </span>
-                    </div>
-                    <div className="trip-duration">
+                  ) : (
+                    <>
+                      <div className="trip-info">
+                        <div className="trip-dates">
+                          <span className="trip-label">{t('trip.entry')}</span>
+                          <span className="trip-date">
+                            {formatDisplayDate(entry, i18n.language)}
+                          </span>
+                        </div>
+                        <div className="trip-dates">
+                          <span className="trip-label">{t('trip.exit')}</span>
+                          <span className="trip-date">
+                            {formatDisplayDate(exit, i18n.language)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="trip-actions">
+                        <button
+                          className="edit-btn"
+                          onClick={() => handleStartEdit(trip)}
+                        >
+                          <Edit2 size={16} /> {t('trip.edit')}
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(trip.id)}
+                        >
+                          <Trash2 size={16} /> {t('trip.delete')}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                  
+                  <div className="trip-footer">
+                    <div className="trip-days-info">
                       <span className="trip-label">{t('trip.days')}</span>
                       <span className="trip-days">{days}{t('trip.daysUnit')}</span>
                     </div>
                     <div className="trip-status">
                       {validation.valid ? (
                         <span className="status-valid">
-                          {t('trip.status.valid')} {validation.reason}
+                          <CheckCircle size={16} /> {validation.reason}
                         </span>
                       ) : (
                         <span className="status-invalid">
-                          {t('trip.status.invalid')} {validation.reason}
+                          <XCircle size={16} /> {validation.reason}
                         </span>
                       )}
                     </div>
-                  </div>
-                  <div className="trip-actions">
-                    <button
-                      className="edit-btn"
-                      onClick={() => handleEdit(trip)}
-                    >
-                      {t('trip.edit')}
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(trip.id)}
-                    >
-                      {t('trip.delete')}
-                    </button>
                   </div>
                 </div>
               )
@@ -279,6 +301,55 @@ export function TripManager({
           <p>{t('trip.empty')}</p>
         </div>
       )}
+
+      <div className="add-trip-section">
+        <h2>{t('trip.title')}</h2>
+        <form onSubmit={handleAddTrip} className="trip-form">
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="entry-date">{t('trip.entryDate')}</label>
+              <input
+                type="date"
+                id="entry-date"
+                value={newEntryDate}
+                onChange={e => setNewEntryDate(e.target.value)}
+                min={formatDate(visaStart)}
+                max={formatDate(visaEnd)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="exit-date">{t('trip.exitDate')}</label>
+              <div className="date-input-with-button">
+                <input
+                  type="date"
+                  id="exit-date"
+                  value={newExitDate}
+                  onChange={e => setNewExitDate(e.target.value)}
+                  min={newEntryDate || formatDate(visaStart)}
+                  max={formatDate(visaEnd)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="max-btn"
+                  onClick={() => handleSetMaxExit(newEntryDate, false)}
+                  title={t('trip.maxStay')}
+                >
+                  {t('trip.maxStay')}
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div className="form-buttons">
+            <button type="submit" className="secondary-btn">
+              <Plus size={16} /> {t('trip.add')}
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
   )
 }

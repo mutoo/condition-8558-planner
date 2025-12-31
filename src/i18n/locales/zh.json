@@ -49,8 +49,15 @@
     "days": "天数：",
     "daysUnit": " 天",
     "status": {
-      "valid": "✓ 有效",
-      "invalid": "✗ 无效"
+      "valid": "有效",
+      "invalid": "无效"
+    },
+    "validation": {
+      "exitAfterEntry": "出境日期必须晚于或等于入境日期",
+      "outsideVisaPeriod": "行程不在签证有效期内",
+      "overlap": "行程与现有行程重叠",
+      "violation": "在 {{date}} 违反 8558 条款（18个月内超过12个月）",
+      "legal": "行程合法"
     },
     "alerts": {
       "enterDates": "请输入入境和出境日期",

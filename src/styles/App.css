@@ -8,21 +8,42 @@
 .app-header {
   text-align: center;
   margin-bottom: 2rem;
-  padding: 2rem 0;
+  padding: 2.5rem 2rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 添加装饰性背景效果 */
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+  pointer-events: none;
 }
 
 .app-header h1 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .app-description {
   font-size: 1.125rem;
   opacity: 0.95;
+  position: relative;
+  z-index: 1;
+  font-weight: 400;
 }
 
 .app-main {
@@ -35,27 +56,34 @@
 .info-section {
   background: white;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 2rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.info-section:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .info-section h2 {
   margin-bottom: 1rem;
   font-size: 1.5rem;
-  color: #333;
+  color: #1f2937;
+  font-weight: 600;
 }
 
 .info-box {
-  background: #f0f9ff;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   padding: 1.5rem;
-  border-radius: 4px;
+  border-radius: 8px;
   border-left: 4px solid #2563eb;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
 }
 
 .info-box p {
   margin-bottom: 1rem;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #374151;
 }
 
@@ -68,12 +96,20 @@
 
 .info-box li {
   margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.info-box li::marker {
+  color: #2563eb;
 }
 
 .info-box .note {
   margin-top: 1rem;
   font-style: italic;
   color: #6b7280;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
 }
 
 .app-footer {
@@ -82,6 +118,7 @@
   text-align: center;
   color: #6b7280;
   border-top: 1px solid #e5e7eb;
+  font-size: 0.95rem;
 }
 
 .two-column-layout {
@@ -89,9 +126,39 @@
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   margin-top: 2rem;
+  align-items: start;
 }
 
-.left-column,
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: 2rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+}
+
+.left-column::-webkit-scrollbar {
+  width: 8px;
+}
+
+.left-column::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.left-column::-webkit-scrollbar-thumb {
+  background-color: rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+}
+
+.left-column::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(139, 92, 246, 0.5);
+}
+
 .right-column {
   display: flex;
   flex-direction: column;
@@ -102,30 +169,66 @@
   .two-column-layout {
     grid-template-columns: 1fr;
   }
+
+  .left-column {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
 }
 
 @media (max-width: 768px) {
   .app-header {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
   }
 
   .app-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
 
   .app-description {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
   .info-section {
-    padding: 1.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .info-section h2 {
+    font-size: 1.25rem;
   }
 
   .info-box {
-    padding: 1rem;
+    padding: 0.875rem;
+    font-size: 0.875rem;
+  }
+  
+  .info-box ul {
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+  }
+  
+  .info-box p {
+    font-size: 0.875rem;
   }
 
   .two-column-layout {
-    gap: 1.5rem;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .left-column,
+  .right-column {
+    gap: 1rem;
+  }
+  
+  .app-footer {
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+    font-size: 0.875rem;
   }
 }

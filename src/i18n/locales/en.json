@@ -49,8 +49,15 @@
     "days": "Days:",
     "daysUnit": " days",
     "status": {
-      "valid": "✓ Valid",
-      "invalid": "✗ Invalid"
+      "valid": "Valid",
+      "invalid": "Invalid"
+    },
+    "validation": {
+      "exitAfterEntry": "Exit date must be after or equal to entry date",
+      "outsideVisaPeriod": "Trip is outside visa validity period",
+      "overlap": "Trip overlaps with existing trip",
+      "violation": "Violates Condition 8558 on {{date}} (exceeds 12 months within 18 months)",
+      "legal": "Valid"
     },
     "alerts": {
       "enterDates": "Please enter entry and exit dates",
