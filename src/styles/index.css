@@ -52,24 +52,25 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
+  background-attachment: fixed;
 }
 
 #root {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 @media (max-width: 768px) {
   #root {
-    padding: 0.75rem;
+    padding: 0.5rem;
   }
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
   }
 }

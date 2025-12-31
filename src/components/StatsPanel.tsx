@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { BarChart3, AlertTriangle } from 'lucide-react'
 import type { TripStatistics } from '../types'
 import { formatDisplayDate, parseDate } from '../utils/dateUtils'
 import './StatsPanel.css'
@@ -14,7 +15,10 @@ export function StatsPanel({ stats, visaStart, visaEnd }: StatsPanelProps) {
 
   return (
     <div className="stats-panel">
-      <h3>{t('stats.title')}</h3>
+      <h3>
+        <BarChart3 size={20} />
+        <span>{t('stats.title')}</span>
+      </h3>
       <div className="stats-grid">
         <div className="stat-item">
           <div className="stat-label">{t('stats.visaPeriod')}</div>
@@ -61,7 +65,8 @@ export function StatsPanel({ stats, visaStart, visaEnd }: StatsPanelProps) {
 
       {stats.violationDays > 0 && (
         <div className="stats-warning-message">
-          {t('stats.warning', { days: stats.violationDays })}
+          <AlertTriangle size={20} />
+          <span>{t('stats.warning', { days: stats.violationDays })}</span>
         </div>
       )}
     </div>
