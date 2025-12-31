@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>澳洲签证 Condition 8558 行程规划器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>澳洲签证 Condition 8558 行程规划器</h1>
+        </header>
+
+        <section class="info-section">
+            <h2>关于 Condition 8558</h2>
+            <div class="info-box">
+                <p><strong>Condition 8558</strong> 是澳大利亚签证的一项常见限制条件，规定：</p>
+                <ul>
+                    <li>在任意连续的 <strong>18个月</strong> 期间内</li>
+                    <li>持有人在澳大利亚的停留时间不得超过 <strong>12个月</strong></li>
+                    <li>这是一个<strong>滑动窗口</strong>计算，以日为单位</li>
+                </ul>
+                <p class="note">本工具帮助您规划行程并验证是否符合此条件的要求。</p>
+            </div>
+        </section>
+
+        <section class="setup-section">
+            <h2>签证有效期设置</h2>
+            <div class="form-group">
+                <label for="visa-start">签证开始日期：</label>
+                <input type="date" id="visa-start" required>
+            </div>
+
+            <div class="form-group">
+                <label>有效期：</label>
+                <div class="duration-options">
+                    <label class="radio-label">
+                        <input type="radio" name="duration" value="18" checked>
+                        18个月
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="duration" value="36">
+                        3年
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="duration" value="60">
+                        5年
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="duration" value="120">
+                        10年
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="duration" value="custom">
+                        自定义
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" id="custom-end-group" style="display: none;">
+                <label for="visa-end">签证结束日期：</label>
+                <input type="date" id="visa-end">
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button id="start-btn" class="primary-btn">开始规划</button>
+                <button id="clear-data-btn" class="clear-btn" style="display: none;">清除所有数据</button>
+            </div>
+        </section>
+
+        <div class="two-column-layout" id="two-column-layout" style="display: none;">
+            <section class="trip-section" id="trip-section">
+                <h2>添加行程</h2>
+                <div class="trip-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="entry-date">入境日期：</label>
+                            <input type="date" id="entry-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="exit-date">出境日期：</label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <input type="date" id="exit-date" style="flex: 1;">
+                                <button id="set-max-exit-btn" class="max-btn" type="button" title="设置为最大可停留日期">最大</button>
+                            </div>
+                        </div>
+                        <button id="add-trip-btn" class="secondary-btn">添加行程</button>
+                    </div>
+                </div>
+
+                <div class="stats-panel" id="stats-panel"></div>
+                <div id="trips-list" class="trips-list"></div>
+            </section>
+
+            <section class="calendar-section" id="calendar-section">
+                <h2>行程日历</h2>
+                <div class="calendar-hint">💡 点击日历上的日期可查看该日期的18个月滑动窗口使用情况</div>
+                <div class="calendar-legend">
+                    <div class="legend-section">
+                        <strong>日期颜色：</strong>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #f5f5f5; border: 1px solid #e0e0e0;"></span>
+                                <span class="legend-label">可入境</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #fee2e2; border: 1px solid #fca5a5;"></span>
+                                <span class="legend-label">窗口已满</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #a7f3d0; border: 1px solid #10b981;"></span>
+                                <span class="legend-label">合规停留</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #fecaca; border: 1px solid #ef4444;"></span>
+                                <span class="legend-label">违规停留</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="legend-divider"></div>
+                    <div class="legend-section">
+                        <strong>月份颜色：</strong>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #d1fae5;"></span>
+                                <span class="legend-label">有合规停留</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #fef3c7;"></span>
+                                <span class="legend-label">部分窗口已满</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #fee2e2;"></span>
+                                <span class="legend-label">整月窗口已满</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #fecaca;"></span>
+                                <span class="legend-label">有违规停留</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="calendar-container" class="calendar-container"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">日期信息</h3>
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- 内容将通过JavaScript填充 -->
+            </div>
+            <div class="modal-footer">
+                <div class="modal-actions">
+                    <button class="action-btn entry-btn" id="set-entry-btn" onclick="setAsEntryDate()">设置为入境日期</button>
+                    <button class="action-btn exit-btn" id="set-exit-btn" onclick="setAsExitDate()">设置为出境日期</button>
+                </div>
+                <button class="primary-btn" onclick="closeModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
