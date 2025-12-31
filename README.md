@@ -1,126 +1,193 @@
-# 澳洲签证 Condition 8558 行程规划器
+# Condition 8558 Calculator
 
-一个帮助持有澳大利亚签证的用户规划和验证行程的单页应用（SPA），确保符合 Condition 8558 的要求。
+A modern Australian visa Condition 8558 trip planning tool built with React + TypeScript + Vite.
 
-## Condition 8558 说明
+## Features
 
-Condition 8558 是澳大利亚签证的常见限制条件：
-- 在任意连续的 **18个月** 期间内
-- 持有人在澳大利亚的停留时间不得超过 **12个月**（365天）
-- 这是一个**滑动窗口**计算，以日为单位
+### 1. Visa Setup
+- Input visa start date
+- Select visa validity period: 18 months, 3 years, 5 years, 10 years, or custom
+- Automatically calculate visa end date
 
-## 功能特性
+### 2. Trip Management
+- Add, edit, and delete entry/exit trips
+- Automatic trip validation
+- Detect trip overlaps
+- Real-time Condition 8558 compliance checking
 
-### 1. 签证设置
-- 输入签证开始日期
-- 选择签证有效期：18个月、3年、5年、10年或自定义
-- 自动计算签证结束日期
+### 3. Statistics
+- Display visa validity period
+- Count of planned trips
+- Total days in Australia
+- Violation days statistics
+- Earliest entry and latest exit dates
 
-### 2. 行程管理
-- 添加多组出入境时间
-- 自动验证行程是否合法
-- 检测行程重叠
-- 实时计算 Condition 8558 合规性
+### 4. Data Persistence
+- Auto-save to localStorage
+- Data persists after page refresh
+- One-click clear all data
 
-### 3. 可视化日历
-- 月份列表视图，默认展开第一个月和最后一个月
-- 点击月份可展开详细日历
-- 颜色编码显示不同状态：
-  - **灰色**：普通日期（不在澳洲）
-  - **蓝色**：在澳洲停留（合规）
-  - **绿色**：有效停留
-  - **红色**：违反 Condition 8558
-  - **浅灰**：超出签证有效期
+## About Condition 8558
 
-### 4. 统计面板
-- 签证有效期
-- 已规划行程数量
-- 总在澳天数
-- 违规天数统计
+Condition 8558 is a common restriction on Australian visas:
+- Within any continuous **18-month** (548 days) period
+- The holder must not stay in Australia for more than **12 months** (365 days)
+- This is a **sliding window** calculation, measured in days
 
-## 使用方法
+## Tech Stack
 
-### 1. 直接在浏览器中打开
+- **Frontend Framework**: React 18
+- **Language**: TypeScript 5.6
+- **Build Tool**: Vite 6
+- **Package Manager**: pnpm
+- **Code Quality**: ESLint + Prettier
+- **Testing**: Vitest + Testing Library
 
-直接双击 `index.html` 文件，或者用浏览器打开它。
+## Project Structure
 
-### 2. 使用本地服务器（推荐）
-
-```bash
-# 使用 Python
-python -m http.server 8000
-
-# 或使用 Node.js 的 http-server
-npx http-server
+```
+src/
+├── components/         # React components
+│   ├── VisaSetup.tsx       # Visa setup component
+│   ├── TripManager.tsx     # Trip management component
+│   └── StatsPanel.tsx      # Statistics panel component
+├── hooks/             # Custom hooks
+│   └── useAppState.ts      # Application state management
+├── utils/             # Utility functions
+│   ├── dateUtils.ts        # Date manipulation utilities
+│   ├── validator.ts        # Condition 8558 validation logic
+│   ├── tripUtils.ts        # Trip-related utilities
+│   └── storage.ts          # Local storage management
+├── types/             # TypeScript type definitions
+│   └── index.ts
+├── styles/            # Global styles
+│   ├── index.css
+│   └── App.css
+├── App.tsx            # Main application component
+└── main.tsx           # Application entry point
 ```
 
-然后在浏览器中访问 `http://localhost:8000`
+## Development
 
-## 使用步骤
+### Install Dependencies
 
-1. **设置签证有效期**
-   - 输入签证开始日期
-   - 选择签证有效期（18个月/3年/5年/10年/自定义）
-   - 点击"开始规划"按钮
+```bash
+pnpm install
+```
 
-2. **添加行程**
-   - 输入入境日期和出境日期
-   - 点击"添加行程"按钮
-   - 系统会自动验证行程是否合法
+### Start Development Server
 
-3. **查看日历**
-   - 查看月份列表，颜色表示该月的状态
-   - 点击月份可展开详细日历
-   - 查看统计面板了解总体情况
+```bash
+pnpm dev
+```
 
-## 技术栈
+The application will run at `http://localhost:5173`
 
-- 纯原生 HTML/CSS/JavaScript
-- 无依赖，无需构建工具
-- 响应式设计，支持移动设备
+### Build for Production
 
-## 验证逻辑
+```bash
+pnpm build
+```
 
-应用使用滑动窗口算法验证 Condition 8558：
-- 对于行程中的每一天，检查过去18个月内在澳洲的总天数
-- 如果超过365天（12个月），则标记为违规
-- 实时计算并显示违规状态
+### Preview Production Build
 
-## 浏览器支持
+```bash
+pnpm preview
+```
 
-- Chrome/Edge（推荐）
-- Firefox
-- Safari
-- 需要支持 ES6+ 特性
+### Code Quality Checks
 
-## 测试
+```bash
+# Run ESLint
+pnpm lint
 
-项目包含完整的单元测试，测试核心功能的正确性。
+# Auto-fix ESLint issues
+pnpm lint:fix
 
-### 运行测试
+# Format code
+pnpm format
 
-1. 在浏览器中打开 `test.html`
-2. 测试会自动运行并显示结果
-3. 点击"运行所有测试"按钮可以重新运行
+# Check code formatting
+pnpm format:check
+```
 
-### 测试覆盖
+### Testing
 
-- ✅ 工具函数（日期解析、格式化、计算）
-- ✅ Condition 8558 验证逻辑
-- ✅ 18个月滑动窗口计算
-- ✅ 边界情况处理
-- ✅ 实际使用场景
+```bash
+# Run tests in watch mode
+pnpm test
 
-测试文件位置：
-- `test.html` - 测试页面
-- `test.js` - 测试用例
+# Run tests once
+pnpm test:run
 
-## 注意事项
+# Run tests with UI
+pnpm test:ui
 
-- 此工具仅供参考，实际签证合规性请咨询专业移民顾问
-- 日期计算以日历日为准
-- 数据存储在浏览器 localStorage，清除浏览器数据会导致数据丢失
+# Run tests with coverage
+pnpm test:coverage
+```
+
+## Core Algorithm
+
+### Sliding Window Calculation
+
+```typescript
+// 18 months = 548 days
+const WINDOW_DAYS = 548
+
+// 12 months = 365 days
+const MAX_DAYS_IN_WINDOW = 365
+
+function getDaysInAustraliaForWindow(date: Date, trips: Trip[]): number {
+  const windowStart = addDays(date, -WINDOW_DAYS)
+  const windowEnd = date
+  
+  let daysInAustralia = 0
+  
+  trips.forEach(trip => {
+    const overlapStart = Math.max(tripStart, windowStart)
+    const overlapEnd = Math.min(tripEnd, windowEnd)
+    
+    if (overlapStart <= overlapEnd) {
+      // Both entry and exit days count, so +1
+      daysInAustralia += daysBetween(overlapStart, overlapEnd) + 1
+    }
+  })
+  
+  return daysInAustralia
+}
+```
+
+### Trip Validation
+
+1. Check if date range is valid (exit date must be after or equal to entry date)
+2. Check if within visa validity period
+3. Check for overlaps with existing trips
+4. Check if any day during the trip violates Condition 8558
+
+## Proof of Concept
+
+The original PoC code is preserved in the `poc/` directory, including:
+- Original HTML/CSS/JavaScript implementation
+- Complete calendar visualization
+- Test cases
+
+## Future Plans
+
+- [x] Add unit tests ✅ **Completed**
+- [ ] Support exporting trip plans (PDF/Excel)
+- [ ] Add multi-language support (English, Chinese)
+- [ ] Add end-to-end tests
+- [ ] Optimize mobile experience
+
+## Contributing
+
+Issues and Pull Requests are welcome!
 
 ## License
 
 MIT
+
+## Disclaimer
+
+This tool is for reference only. Please refer to official Australian immigration documents for specific visa conditions.

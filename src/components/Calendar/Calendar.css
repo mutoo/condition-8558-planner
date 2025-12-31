@@ -1,0 +1,495 @@
+.calendar-wrapper {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-hint {
+  background: #fef3c7;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #f59e0b;
+  line-height: 1.6;
+}
+
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #f5f3ff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.08);
+}
+
+.legend-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend-section strong {
+  color: #6366f1;
+  font-size: 0.9em;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.legend-divider {
+  width: 100%;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.legend-label {
+  font-size: 0.85em;
+  color: #555;
+  white-space: nowrap;
+}
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.month-block {
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.month-block:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.month-header {
+  padding: 18px 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.05em;
+  transition: all 0.3s;
+}
+
+.month-header:hover {
+  background: #f5f3ff;
+}
+
+.month-header.has-stay {
+  background: #d1fae5;
+}
+
+.month-header.has-window-full {
+  background: #fef3c7;
+}
+
+.month-header.has-violation {
+  background: #fecaca;
+  color: #991b1b;
+}
+
+.month-header.all-window-full {
+  background: #fee2e2;
+}
+
+.expand-icon {
+  font-size: 1.2em;
+  transition: transform 0.3s;
+}
+
+.month-block.expanded .expand-icon {
+  transform: rotate(180deg);
+}
+
+.month-calendar {
+  padding: 24px;
+  background: white;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.calendar-header-cell {
+  text-align: center;
+  font-weight: 700;
+  padding: 10px 8px;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 0.9em;
+  position: relative;
+  cursor: default;
+  transition: all 0.2s;
+}
+
+.calendar-day.empty {
+  background: transparent;
+}
+
+.calendar-day.normal {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+}
+
+.calendar-day.normal:hover {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  z-index: 10;
+}
+
+.calendar-day.window-full {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+.calendar-day.window-full:hover {
+  background: #fecaca;
+  border-color: #ef4444;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  z-index: 10;
+}
+
+.calendar-day.valid-stay {
+  background: #a7f3d0;
+  border: 1px solid #10b981;
+  color: #065f46;
+  font-weight: 600;
+}
+
+.calendar-day.valid-stay:hover {
+  background: #6ee7b7;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  z-index: 10;
+}
+
+.calendar-day.violation {
+  background: #fecaca;
+  border: 1px solid #ef4444;
+  color: #991b1b;
+  font-weight: 600;
+}
+
+.calendar-day.violation:hover {
+  background: #fca5a5;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  z-index: 10;
+}
+
+.calendar-day.out-of-visa {
+  background: #e0e0e0;
+  color: #999;
+}
+
+/* Modal Styles */
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  padding: 24px 28px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.35em;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.modal-close {
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.3s;
+}
+
+.modal-close:hover {
+  color: #ffeb3b;
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 28px 32px;
+  line-height: 1.8;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-body h4 {
+  color: #6366f1;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.modal-body h4:first-child {
+  margin-top: 0;
+}
+
+.modal-body p {
+  margin: 12px 0;
+}
+
+.modal-body ul {
+  margin: 12px 0;
+  padding-left: 24px;
+}
+
+.modal-body li {
+  margin: 10px 0;
+}
+
+.modal-body .info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-body .info-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.modal-body .info-value {
+  color: #333;
+  text-align: right;
+}
+
+.modal-body .highlight {
+  background: #fef3c7;
+  padding: 16px 18px;
+  border-radius: 8px;
+  border-left: 4px solid #f59e0b;
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.modal-body .success {
+  background: #d1fae5;
+  padding: 16px 18px;
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.modal-body .warning {
+  background: #fef3c7;
+  padding: 16px 18px;
+  border-radius: 8px;
+  border-left: 4px solid #f59e0b;
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.modal-body .danger {
+  background: #fee2e2;
+  padding: 16px 18px;
+  border-radius: 8px;
+  border-left: 4px solid #ef4444;
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.modal-footer {
+  padding: 20px 28px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.entry-btn {
+  background: #10b981;
+  color: white;
+}
+
+.entry-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+}
+
+.exit-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.exit-btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.modal-footer .primary-btn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.modal-footer .primary-btn:hover {
+  background: #4f46e5;
+}
+
+@media (max-width: 768px) {
+  .calendar-wrapper {
+    padding: 1.5rem;
+  }
+
+  .calendar-legend {
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .legend-items {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .month-header {
+    padding: 15px 20px;
+    font-size: 1em;
+  }
+
+  .month-calendar {
+    padding: 15px;
+  }
+
+  .calendar-grid {
+    gap: 4px;
+  }
+
+  .calendar-day {
+    font-size: 0.8em;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
