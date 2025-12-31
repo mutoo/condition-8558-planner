@@ -1,0 +1,109 @@
+.ad-slot {
+  width: 100%;
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90px;
+}
+
+/* 主要广告位样式 */
+.ad-slot.primary-ad {
+  margin: 1.5rem 0 2rem 0;
+}
+
+/* 次要广告位样式 */
+.ad-slot.secondary-ad {
+  margin: 1.5rem 0;
+  padding: 0.5rem 0;
+}
+
+.ad-slot-horizontal {
+  min-height: 90px;
+}
+
+.ad-slot-rectangle {
+  min-height: 250px;
+}
+
+.ad-slot-auto {
+  min-height: 100px;
+}
+
+/* 开发环境占位符样式 */
+.ad-placeholder {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border: 2px dashed #9ca3af;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-family: monospace;
+  font-size: 0.875rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.ad-placeholder:hover {
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  border-color: #6b7280;
+}
+
+.ad-placeholder span:first-child {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.ad-format {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ad-warning {
+  font-size: 0.75rem;
+  color: #ef4444;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .ad-slot {
+    margin: 1rem 0;
+    min-height: 50px;
+  }
+
+  .ad-slot.primary-ad {
+    margin: 1rem 0 1.25rem 0;
+  }
+
+  .ad-slot.secondary-ad {
+    margin: 1rem 0;
+    padding: 0.25rem 0;
+  }
+
+  .ad-slot-horizontal {
+    min-height: 50px;
+  }
+
+  .ad-slot-rectangle {
+    min-height: 100px;
+  }
+
+  .ad-placeholder {
+    padding: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .ad-placeholder span:first-child {
+    font-size: 0.875rem;
+  }
+}
+

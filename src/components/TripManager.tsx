@@ -10,6 +10,7 @@ import {
   daysBetween,
 } from '../utils/dateUtils'
 import { validateTrip, calculateMaxConsecutiveStay } from '../utils/validator'
+import { AdSlot } from './AdSlot'
 import './TripManager.css'
 
 interface TripManagerProps {
@@ -311,6 +312,13 @@ export function TripManager({
           <p>{t('trip.empty')}</p>
         </div>
       )}
+
+      {/* 次要广告位：已规划行程与添加行程之间 */}
+      <AdSlot 
+        slotId={import.meta.env.VITE_ADSENSE_SECONDARY_SLOT || 'secondary-ad'} 
+        format="horizontal" 
+        className="secondary-ad" 
+      />
 
       <div className="add-trip-section">
         <h2>{t('trip.title')}</h2>

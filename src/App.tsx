@@ -6,6 +6,7 @@ import { TripManager } from './components/TripManager'
 import { StatsPanel } from './components/StatsPanel'
 import { Calendar, type CalendarRef } from './components/Calendar'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
+import { AdSlot } from './components/AdSlot'
 import { calculateStatistics } from './utils/tripUtils'
 import { formatDate, parseDate } from './utils/dateUtils'
 import './styles/App.css'
@@ -86,6 +87,13 @@ function App() {
             <p className="warning-note">{t('info.disclaimer.warning')}</p>
           </div>
         </section>
+
+        {/* 主要广告位：Info Section 和 Visa Setup 之间 */}
+        <AdSlot 
+          slotId={import.meta.env.VITE_ADSENSE_PRIMARY_SLOT || 'primary-ad'} 
+          format="horizontal" 
+          className="primary-ad" 
+        />
 
         <VisaSetup
           onStart={setVisaPeriod}
