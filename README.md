@@ -1,5 +1,12 @@
 # Condition 8558 Planner
 
+[![Built with Cursor](https://img.shields.io/badge/Built_with-Cursor-black?style=flat&logo=cursor&logoColor=white)](https://cursor.sh)
+[![Vibe Coding](https://img.shields.io/badge/Vibe-Coding-7c3aed?style=flat&logo=sparkles&logoColor=white)](https://github.com/features/copilot)
+[![React](https://img.shields.io/badge/React-18-61dafb?style=flat&logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178c6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-6-646cff?style=flat&logo=vite&logoColor=white)](https://vitejs.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat)](LICENSE)
+
 A modern, professional Australian visa Condition 8558 trip planning tool built with React + TypeScript + Vite.
 
 🔗 **Live Demo**: [condition-8558-planner](https://condition-8558.mutoo.im)

@@ -145,6 +145,7 @@ function App() {
 
       <footer className="app-footer">
         <p>{t('app.footer')}</p>
+        <p className="copyright">{t('app.copyright', { year: new Date().getFullYear() })}</p>
       </footer>
     </div>
   )
